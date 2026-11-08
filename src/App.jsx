@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { empresa, nome, metodo, servicos, etapas, simbolo, portfolio } from './conteudo.js'
 import Icone from './Icone.jsx'
 import Diamante, { useVisivel } from './Diamante.jsx'
@@ -44,7 +44,30 @@ function Cabecalho({ temPortfolio }) {
   )
 }
 
+// Faz "PODER." ocupar exatamente a largura da linha "CRIATIVIDADE e", como no criativo
+function useLarguraIgual() {
+  const linha = useRef(null)
+  const palavra = useRef(null)
+  useLayoutEffect(() => {
+    const ajustar = () => {
+      const l = linha.current
+      const p = palavra.current
+      if (!l || !p) return
+      p.style.fontSize = '100px'
+      const natural = p.getBoundingClientRect().width
+      if (natural) p.style.fontSize = `${(100 * l.getBoundingClientRect().width) / natural}px`
+    }
+    ajustar()
+    document.fonts?.ready.then(ajustar)
+    const obs = new ResizeObserver(ajustar)
+    obs.observe(linha.current)
+    return () => obs.disconnect()
+  }, [])
+  return [linha, palavra]
+}
+
 function Hero() {
+  const [linha, palavra] = useLarguraIgual()
   return (
     <section id="inicio" className="hero fundo-magenta listras">
       <GradeFundo />
@@ -54,11 +77,11 @@ function Hero() {
         <div className="hero__texto">
           <p className="hero__linha-fina">Transformamos ideias em</p>
           <h1>
-            <span className="hero__linha">
+            <span className="hero__linha" ref={linha}>
               <span className="titulo-pesado">Criatividade</span>
               <span className="hero__e"><span className="faixa faixa--fina">e</span></span>
             </span>
-            <span className="titulo-poder">Poder.</span>
+            <span className="titulo-poder hero__poder" ref={palavra}>Poder.</span>
           </h1>
           <p className="hero__chamada">
             Conteúdos que <strong>chamam atenção</strong>, <strong>fortalecem marcas</strong> e <strong>criam oportunidades</strong> de negócio.

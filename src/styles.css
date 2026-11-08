@@ -108,7 +108,9 @@ a { color: inherit; }
 .hero h1 .titulo-pesado { color: #fff; font-size: clamp(2.2rem, 6.2vw, 5.2rem); line-height: .95; }
 .hero__linha { display: flex; align-items: flex-end; flex-wrap: nowrap; gap: 0 .25em; }
 .hero__e { font-size: clamp(1.4rem, 3.2vw, 2.6rem); line-height: 1; margin-bottom: .12em; }
-.hero h1 .titulo-poder { font-size: clamp(3.6rem, 11vw, 9rem); line-height: .9; margin-top: .06em; }
+.hero h1 { justify-items: start; width: max-content; max-width: 100%; }
+.hero__linha { width: max-content; }
+.hero h1 .hero__poder { display: block; white-space: nowrap; font-size: clamp(3.6rem, 11vw, 9rem); line-height: .82; margin-top: .04em; }
 .hero__chamada { font-size: 1.2rem; max-width: 520px; color: var(--texto-suave); margin-bottom: 34px; }
 .hero__chamada strong { color: #fff; }
 .hero__botoes { display: flex; gap: 12px; flex-wrap: wrap; }
