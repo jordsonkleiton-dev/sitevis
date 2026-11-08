@@ -1,4 +1,14 @@
 /* 🎨 Identidade VIS creative — baseada na logo e nos criativos */
+
+/* Play Pretend (Chequered Ink): fonte dos títulos de impacto, como "SUPER PODER".
+   Não tem acentos: use só em palavras sem acento. */
+@font-face {
+  font-family: 'Play Pretend';
+  src: url('./assets/fonts/play-pretend.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 :root {
   --magenta: #D400EC;
   --roxo: #7A007C;
@@ -16,7 +26,7 @@
 
   --fonte: 'Author', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --fonte-pesada: 'Montserrat', 'Arial Black', sans-serif;
-  --fonte-poder: 'Chakra Petch', 'Montserrat', sans-serif;
+  --fonte-poder: 'Play Pretend', 'Chakra Petch', 'Montserrat', sans-serif;
   color-scheme: dark;
 }
 
@@ -34,7 +44,7 @@ a { color: inherit; }
 /* Tipografia dos criativos */
 .titulo-pesado { font-family: var(--fonte-pesada); font-weight: 900; text-transform: uppercase; letter-spacing: -.01em; color: var(--laranja-claro); }
 .titulo-pesado--branco { color: #fff; }
-.titulo-poder { font-family: var(--fonte-poder); font-weight: 700; font-style: italic; text-transform: uppercase; color: #fff; letter-spacing: -.02em; text-shadow: 0 0 30px rgba(225, 0, 226, .6); }
+.titulo-poder { font-family: var(--fonte-poder); font-weight: 400; font-style: normal; text-transform: uppercase; color: #fff; letter-spacing: .01em; text-shadow: 0 0 30px rgba(225, 0, 226, .6); }
 .faixa { display: inline; background: var(--laranja); color: #fff; padding: .02em .28em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .faixa--fina { font-family: var(--fonte); font-weight: 200; font-style: italic; text-transform: none; letter-spacing: 0; }
 
@@ -131,7 +141,7 @@ a { color: inherit; }
 .sobre { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; padding-left: 60px; }
 .sobre__texto { font-size: 1.15rem; color: #f3dccb; margin-top: 18px; }
 .sobre .cartao--vidro { border-left: 4px solid var(--laranja-claro); }
-.sobre .cartao--vidro h3 { font-family: var(--fonte-poder); font-style: italic; font-size: 1.6rem; text-transform: uppercase; }
+.sobre .cartao--vidro h3 { font-family: var(--fonte-poder); font-weight: 400; font-size: 1.6rem; text-transform: uppercase; }
 
 /* Símbolo */
 .simbolo::before { content: ''; position: absolute; z-index: 0; width: 280px; height: 660px; left: 50%; top: 40px; transform: translateX(-50%); background: var(--magenta); opacity: .06; -webkit-mask: var(--raio) center / contain no-repeat; mask: var(--raio) center / contain no-repeat; }
@@ -146,7 +156,7 @@ a { color: inherit; }
 .equacao__arte .diamante { height: 170px; width: auto; }
 .equacao__parte--tudo .diamante { filter: drop-shadow(0 0 22px rgba(225, 0, 226, .6)); }
 .equacao__parte--vi .diamante { filter: drop-shadow(0 0 1px rgba(255, 255, 255, .6)); }
-.equacao__parte h3 { font-family: var(--fonte-poder); font-style: italic; text-transform: uppercase; font-size: 1.5rem; }
+.equacao__parte h3 { font-family: var(--fonte-poder); font-weight: 400; text-transform: uppercase; font-size: 1.5rem; }
 .equacao__sub { color: var(--laranja-claro) !important; font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .1em; margin: 6px 0 10px; }
 .equacao__sinal { position: absolute; right: -44px; top: 50%; transform: translateY(-50%); width: 32px; text-align: center; font-family: var(--fonte-pesada); font-size: 2.4rem; font-weight: 900; color: var(--laranja-claro); }
 
@@ -169,7 +179,7 @@ a { color: inherit; }
 
 /* Método VIS */
 .pilar { position: relative; overflow: hidden; padding: 34px 30px; border-radius: var(--raio-borda); background: rgba(20, 0, 24, .4); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, .16); }
-.pilar__letra { display: block; font-family: var(--fonte-poder); font-size: 5.5rem; font-weight: 700; font-style: italic; line-height: 1; margin-bottom: 16px; color: #fff; text-shadow: 0 0 24px rgba(225, 0, 226, .8); }
+.pilar__letra { display: block; font-family: var(--fonte-poder); font-size: 5.5rem; font-weight: 400; line-height: 1; margin-bottom: 16px; color: #fff; text-shadow: 0 0 24px rgba(225, 0, 226, .8); }
 .pilar:nth-child(2) .pilar__letra { color: var(--laranja-claro); text-shadow: 0 0 24px rgba(214, 109, 0, .7); }
 .pilar h3 { font-size: 1.4rem; margin-bottom: 10px; text-transform: uppercase; font-family: var(--fonte-pesada); font-weight: 800; }
 .pilar p { color: #ead6ee; }
@@ -199,7 +209,7 @@ a { color: inherit; }
 /* Como funciona */
 .etapas { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; margin-top: 56px; }
 .etapa { padding-top: 18px; border-top: 2px solid rgba(255, 255, 255, .15); }
-.etapa__num { display: flex; align-items: center; gap: 10px; font-family: var(--fonte-poder); font-style: italic; font-size: 2.8rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.etapa__num { display: flex; align-items: center; gap: 10px; font-family: var(--fonte-poder); font-size: 2.8rem; font-weight: 400; color: #fff; margin-bottom: 6px; }
 .etapa__num::before { content: ''; width: 14px; height: 34px; background: linear-gradient(var(--laranja-claro), var(--magenta)); -webkit-mask: var(--raio) center / contain no-repeat; mask: var(--raio) center / contain no-repeat; }
 .etapa h3 { font-size: 1.15rem; margin-bottom: 6px; }
 .etapa p { color: var(--texto-suave); }

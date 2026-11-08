@@ -32,3 +32,11 @@ Coloque as imagens dos posts na pasta `public/portfolio/` com estes nomes:
 - `super-poder.jpg`
 
 Para adicionar mais criativos, inclua novos itens na lista `portfolio` em `src/conteudo.js`.
+
+## Fontes da marca
+
+- **Author** (Fontshare, grátis): textos e o "creative." da logo. Carregada de api.fontshare.com.
+- **Play Pretend** (Chequered Ink): títulos de impacto, como "PODER." e "VIS". Arquivo em
+  `src/assets/fonts/`. ⚠️ Não tem acentos — use só em palavras sem acento. Uso comercial
+  exige licença da Chequered Ink (chequered.ink).
+- **Montserrat Black** (Google Fonts): títulos grossos, como "CRIATIVIDADE".

@@ -136,7 +136,7 @@ function Metodo() {
       <div className="container">
         <p className="etiqueta etiqueta--centro">Como pensamos</p>
         <h2 className="titulo-centro">
-          <span className="faixa faixa--fina">o</span> <span className="titulo-poder titulo-poder--medio">Método VIS</span>
+          <span className="faixa faixa--fina">o método</span> <span className="titulo-poder titulo-poder--medio">VIS</span>
         </h2>
         <p className="secao__sub">Três pilares que orientam cada projeto, do planejamento ao resultado.</p>
         <div className="grade grade--3">
