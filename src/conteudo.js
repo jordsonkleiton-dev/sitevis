@@ -113,7 +113,7 @@ export const portfolio = [
   {
     imagens: ['portfolio/destrave-o-crescimento-1.webp', 'portfolio/destrave-o-crescimento-2.webp'],
     titulo: 'Destrave o crescimento',
-    legenda: 'Carrossel: passos simples para destravar o crescimento da marca.',
+    legenda: 'Carrossel: 6 passos simples para destravar o crescimento da marca.',
   },
   {
     imagens: ['portfolio/clareza-antes-de-conversao.webp'],
