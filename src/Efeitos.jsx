@@ -58,7 +58,7 @@ export function Relampagos({ className = '' }) {
 export function Assinatura({ lado = 'direita' }) {
   return (
     <span className={`assinatura assinatura--${lado}`} aria-hidden="true">
-      <b>VIS</b>creative<i>.</i>
+      <img src="./logo/vis-letras-branco.svg" alt="" />creative<i>.</i>
     </span>
   )
 }

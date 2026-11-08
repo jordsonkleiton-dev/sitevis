@@ -19,8 +19,7 @@ const menu = [
 function Logo() {
   return (
     <a href="#inicio" className="logo" aria-label={empresa.nome}>
-      <img src="./logo/vis-simbolo.svg" alt="" width="22" height="38" />
-      <span><b>VIS</b>creative<i>.</i></span>
+      <img src="./logo/vis-logo-branco.svg" alt={empresa.nome} width="82" height="40" />
     </a>
   )
 }

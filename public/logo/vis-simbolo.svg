@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="428 336 250 424" role="img" aria-label="VIS creative">
   <defs>
     <linearGradient id="vis-g" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#E100E2"/>
+      <stop offset="0" stop-color="#D400EC"/>
       <stop offset=".7" stop-color="#7A007C"/>
       <stop offset="1" stop-color="#7E006D"/>
     </linearGradient>

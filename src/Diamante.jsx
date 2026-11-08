@@ -38,7 +38,7 @@ export default function Diamante({ mostrar = 'tudo', montar = false, ativo = tru
     >
       <defs>
         <linearGradient id={`g${id}`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#E100E2" />
+          <stop offset="0" stopColor="#D400EC" />
           <stop offset=".7" stopColor="#7A007C" />
           <stop offset="1" stopColor="#7E006D" />
         </linearGradient>
