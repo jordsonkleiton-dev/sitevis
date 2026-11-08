@@ -102,12 +102,13 @@ a { color: inherit; }
 
 /* Início */
 .hero { padding: 90px 0 110px; min-height: calc(100vh - 68px); display: flex; align-items: center; }
-.hero__grade { display: grid; grid-template-columns: 1.35fr 1fr; align-items: center; gap: 30px; }
-.hero__linha-fina { font-size: clamp(1.2rem, 2.4vw, 1.7rem); font-weight: 200; margin-bottom: 10px; }
+.hero__grade { display: grid; grid-template-columns: 1.6fr 1fr; align-items: center; gap: 30px; }
+.hero__linha-fina { font-size: clamp(1.2rem, 2.4vw, 1.7rem); font-weight: 200; line-height: 1.1; margin-bottom: .1em; }
 .hero h1 { display: grid; justify-items: start; margin-bottom: 28px; }
-.hero h1 .titulo-pesado { color: #fff; font-size: clamp(2.6rem, 7.4vw, 6rem); line-height: .95; }
-.hero__e { font-size: clamp(1.6rem, 3.6vw, 2.8rem); margin: .1em 0 .05em; }
-.hero h1 .titulo-poder { font-size: clamp(3.6rem, 11vw, 9rem); line-height: .9; }
+.hero h1 .titulo-pesado { color: #fff; font-size: clamp(2.2rem, 6.2vw, 5.2rem); line-height: .95; }
+.hero__linha { display: flex; align-items: flex-end; flex-wrap: nowrap; gap: 0 .25em; }
+.hero__e { font-size: clamp(1.4rem, 3.2vw, 2.6rem); line-height: 1; margin-bottom: .12em; }
+.hero h1 .titulo-poder { font-size: clamp(3.6rem, 11vw, 9rem); line-height: .9; margin-top: .06em; }
 .hero__chamada { font-size: 1.2rem; max-width: 520px; color: var(--texto-suave); margin-bottom: 34px; }
 .hero__chamada strong { color: #fff; }
 .hero__botoes { display: flex; gap: 12px; flex-wrap: wrap; }

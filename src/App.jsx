@@ -54,8 +54,10 @@ function Hero() {
         <div className="hero__texto">
           <p className="hero__linha-fina">Transformamos ideias em</p>
           <h1>
-            <span className="titulo-pesado">Criatividade</span>
-            <span className="hero__e"><span className="faixa faixa--fina">e</span></span>
+            <span className="hero__linha">
+              <span className="titulo-pesado">Criatividade</span>
+              <span className="hero__e"><span className="faixa faixa--fina">e</span></span>
+            </span>
             <span className="titulo-poder">Poder.</span>
           </h1>
           <p className="hero__chamada">
