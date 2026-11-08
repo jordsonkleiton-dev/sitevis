@@ -14,32 +14,45 @@ npm run studio
 O Studio abre no navegador (normalmente http://localhost:3000) com a prévia ao vivo
 de cada animação. Edite o código e a prévia atualiza na hora.
 
-## Gerar o vídeo
+## Gerar os vídeos
 
 ```bash
-npm run render -- Abertura out/abertura.mp4
+# Fundo verde (chroma key) — para CapCut e qualquer editor
+npm run render -- DiamanteVertical out/diamante-vertical-verde.mp4 --crf=14
+
+# Fundo transparente (ProRes 4444) — Premiere, After Effects, DaVinci
+npm run render -- DiamanteVertical out/diamante-vertical-transparente.mov --codec=prores --prores-profile=4444 --image-format=png --pixel-format=yuva444p10le --props='{"fundo":"transparente"}'
 ```
 
 Os vídeos vão para `vfx/out/` (essa pasta não vai para o Git).
-Para um quadro só, como imagem: `npm run still -- Abertura out/capa.png --frame=75`
+
+## Animações
+
+| Animação             | Tamanho     | Uso                    |
+| -------------------- | ----------- | ---------------------- |
+| `DiamanteVertical`   | 1080 × 1920 | Reels, Stories, TikTok |
+| `DiamanteQuadrado`   | 1080 × 1080 | Feed                   |
+| `DiamanteHorizontal` | 1920 × 1080 | YouTube, telas         |
+
+60 fps, 4 segundos. Roteiro: faísca cai → explode em raios → os raios voltam
+desenhando o contorno de cada peça → a cor varre as peças → linha de luz →
+diamante parado por ~1,5 s.
+
+### Regras para o chroma key ficar limpo
+
+- Nada de brilho, desfoque ou transparência sobre o fundo verde.
+- Linhas finas só em cores vivas (magenta, rosa, laranja). Linhas finas e
+  escuras ficam esverdeadas depois da compressão do MP4.
+- Nenhuma cor verde na animação.
 
 ## Organização
 
 - `src/Raiz.jsx` — lista das animações (nome, tamanho, fps, duração)
-- `src/composicoes/` — uma animação por arquivo (ex.: `Abertura.jsx`)
+- `src/composicoes/DiamanteRevelacao.jsx` — a revelação do diamante (tempos no topo do arquivo)
+- `src/lib/diamante.js` — peças do diamante (mesmas coordenadas da logo)
+- `src/lib/geometria.js` — raios em zigue-zague, linhas que se desenham, varredura de cor
 - `src/lib/marca.js` — cores e fontes da VIS
-- `src/lib/Raio.jsx` — raio elétrico animado, reutilizável
 - `public/` — logos (SVG) e fontes; use com `staticFile('logo/...')`
-
-## Formatos prontos
-
-| Animação           | Tamanho     | Uso                     |
-| ------------------ | ----------- | ----------------------- |
-| `Abertura`         | 1080 × 1920 | Reels, Stories, TikTok  |
-| `AberturaQuadrada` | 1080 × 1080 | Feed                    |
-
-Todas a 30 fps. Para criar uma nova: copie um arquivo de `src/composicoes/`
-e registre em `src/Raiz.jsx`.
 
 ## Observações
 
@@ -47,4 +60,4 @@ e registre em `src/Raiz.jsx`.
 - **Licença do Remotion:** grátis para pessoas físicas e empresas com até 3 pessoas.
   Acima disso, exige licença paga (remotion.dev/license).
 - Sem internet para baixar o navegador do Remotion, aponte para um Chrome instalado:
-  `REMOTION_BROWSER=/caminho/do/chrome npm run render -- Abertura out/abertura.mp4`
+  `REMOTION_BROWSER=/caminho/do/chrome npm run render -- DiamanteVertical out/diamante.mp4`
