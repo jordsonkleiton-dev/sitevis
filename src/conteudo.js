@@ -6,11 +6,11 @@ export const empresa = {
   chamada: 'Transformamos ideias em conteúdos que chamam atenção, fortalecem marcas e criam oportunidades de negócio.',
   sobre:
     'A VIS Creative é uma empresa de criatividade, produção audiovisual e comunicação estratégica. Atendemos diferentes segmentos, com soluções adaptadas aos objetivos de cada cliente.',
-  // ⚠️ Contatos ainda são de exemplo — troque pelos reais
+  // ⚠️ WhatsApp, e-mail e cidade ainda são de exemplo — troque pelos reais
   whatsapp: '5500000000000', // DDI + DDD + número, só dígitos
   email: 'contato@exemplo.com',
-  instagram: 'https://instagram.com/',
-  instagramNome: '@viscreative',
+  instagram: 'https://instagram.com/viscreative_',
+  instagramNome: '@viscreative_',
   cidade: 'Sua cidade — atendimento presencial e online',
 }
 
@@ -89,4 +89,25 @@ export const etapas = [
   { titulo: 'Proposta sob medida', texto: 'Montamos um plano com os serviços que fazem sentido para você.' },
   { titulo: 'Criação e produção', texto: 'Planejamos, roteirizamos, gravamos e criamos os conteúdos.' },
   { titulo: 'Publicação e ajustes', texto: 'Acompanhamos os resultados e ajustamos o caminho.' },
+]
+
+// A história do símbolo: o raio (S) + V e I = o diamante
+export const simbolo = {
+  titulo: 'Lapidamos diamantes.',
+  texto: [
+    'O S da VIS é um raio: o poder que movimenta. Sozinho, ele é energia pura.',
+    'Quando se une ao V e ao I, o raio forma um diamante: o nosso símbolo. É ele que une o Método VIS à sua empresa.',
+    'Nosso trabalho é lapidar esse diamante. E ele só fica perfeito quando o poder da VIS caminha junto com a empresa.',
+  ],
+  partes: [
+    { mostrar: 'raio', titulo: 'O raio', sub: 'S · o poder da VIS', texto: 'Estratégia e criatividade como força para movimentar a sua marca.' },
+    { mostrar: 'vi', titulo: 'V + I', sub: 'Visibilidade e Identidade', texto: 'A essência da sua empresa: quem ela é e como é vista.' },
+    { mostrar: 'tudo', titulo: 'O diamante', sub: 'A sua marca lapidada', texto: 'Quando o poder da VIS acompanha a empresa, a marca brilha.' },
+  ],
+}
+
+// Criativos do portfólio: coloque as imagens na pasta public/portfolio/
+export const portfolio = [
+  { imagem: 'portfolio/clareza-antes-de-conversao.jpg', titulo: 'Clareza antes de conversão', legenda: 'Post: publicidade que não manipula a percepção do lead.', cor: 'laranja' },
+  { imagem: 'portfolio/super-poder.jpg', titulo: 'Super poder', legenda: 'Post: imagem não é só estética, é poder de impacto.', cor: 'magenta' },
 ]

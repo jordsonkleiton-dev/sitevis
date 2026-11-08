@@ -1,15 +1,18 @@
 import { useState } from 'react'
-import { empresa, nome, metodo, servicos, etapas } from './conteudo.js'
+import { empresa, nome, metodo, servicos, etapas, simbolo, portfolio } from './conteudo.js'
 import Icone from './Icone.jsx'
+import Diamante, { useVisivel } from './Diamante.jsx'
+import { Relampagos, Assinatura, GradeFundo } from './Efeitos.jsx'
 
 const linkWhats = (msg = 'Olá! Vim pelo site da VIS creative e quero saber mais.') =>
   `https://wa.me/${empresa.whatsapp}?text=${encodeURIComponent(msg)}`
 
 const menu = [
   ['#sobre', 'Sobre'],
+  ['#simbolo', 'O símbolo'],
   ['#metodo', 'Método VIS'],
   ['#servicos', 'Serviços'],
-  ['#como-funciona', 'Como funciona'],
+  ['#portfolio', 'Criativos'],
   ['#contato', 'Contato'],
 ]
 
@@ -17,7 +20,7 @@ function Logo() {
   return (
     <a href="#inicio" className="logo" aria-label={empresa.nome}>
       <img src="./logo/vis-simbolo.svg" alt="" width="22" height="38" />
-      <span><b>VIS</b> creative<i>.</i></span>
+      <span><b>VIS</b>creative<i>.</i></span>
     </a>
   )
 }
@@ -44,18 +47,30 @@ function Cabecalho() {
 
 function Hero() {
   return (
-    <section id="inicio" className="hero">
+    <section id="inicio" className="hero fundo-magenta listras">
+      <GradeFundo />
+      <Relampagos />
+      <Assinatura lado="direita" />
       <div className="container hero__grade">
-        <div>
-          <p className="etiqueta">Criatividade · Audiovisual · Comunicação estratégica</p>
-          <h1>Criatividade <span className="destaque">e poder.</span></h1>
-          <p className="hero__texto">{empresa.chamada}</p>
+        <div className="hero__texto">
+          <p className="hero__linha-fina">Transformamos ideias em</p>
+          <h1>
+            <span className="titulo-pesado">Criatividade</span>
+            <span className="hero__e"><span className="faixa faixa--fina">e</span></span>
+            <span className="titulo-poder">Poder.</span>
+          </h1>
+          <p className="hero__chamada">
+            Conteúdos que <strong>chamam atenção</strong>, <strong>fortalecem marcas</strong> e <strong>criam oportunidades</strong> de negócio.
+          </p>
           <div className="hero__botoes">
-            <a className="botao" href={linkWhats('Olá! Quero solicitar uma proposta da VIS creative.')} target="_blank" rel="noreferrer">Solicitar proposta</a>
+            <a className="botao botao--laranja" href={linkWhats('Olá! Quero solicitar uma proposta da VIS creative.')} target="_blank" rel="noreferrer">Solicitar proposta</a>
             <a className="botao botao--contorno" href="#servicos">Conhecer serviços</a>
           </div>
+          <p className="arroba"><span className="arroba__icone" aria-hidden="true" />{empresa.instagramNome}</p>
         </div>
-        <img className="hero__simbolo" src="./logo/vis-simbolo.svg" alt="" />
+        <div className="hero__arte">
+          <Diamante montar className="hero__simbolo" titulo="Símbolo VIS: o raio se une ao V e ao I e forma um diamante" />
+        </div>
       </div>
     </section>
   )
@@ -63,14 +78,19 @@ function Hero() {
 
 function Sobre() {
   return (
-    <section id="sobre" className="secao">
+    <section id="sobre" className="secao fundo-laranja listras">
+      <GradeFundo />
+      <Assinatura lado="esquerda" />
       <div className="container sobre">
         <div>
           <p className="etiqueta">Quem somos</p>
-          <h2>Ideias que movimentam empresas</h2>
-          <p>{empresa.sobre}</p>
+          <h2 className="titulo-misto">
+            <span className="titulo-pesado">Ideias</span> <span className="faixa faixa--fina">que movimentam</span>{' '}
+            <span className="titulo-pesado titulo-pesado--branco">Empresas</span>
+          </h2>
+          <p className="sobre__texto">{empresa.sobre}</p>
         </div>
-        <div className="cartao cartao--nome">
+        <div className="cartao cartao--vidro">
           <h3>{nome.titulo}</h3>
           <p>{nome.texto}</p>
         </div>
@@ -79,19 +99,54 @@ function Sobre() {
   )
 }
 
+function Simbolo() {
+  const [ref, visivel] = useVisivel()
+  return (
+    <section id="simbolo" className="secao fundo-escuro simbolo" ref={ref}>
+      <div className="container">
+        <p className="etiqueta etiqueta--centro">O nosso símbolo</p>
+        <h2 className="titulo-centro">
+          <span className="titulo-pesado">Lapidamos</span> <span className="titulo-poder titulo-poder--medio">diamantes.</span>
+        </h2>
+        <div className="simbolo__texto">
+          {simbolo.texto.map((t) => <p key={t}>{t}</p>)}
+        </div>
+        <ol className={`equacao ${visivel ? 'equacao--visivel' : ''}`}>
+          {simbolo.partes.map((p, i) => (
+            <li key={p.titulo} className={`equacao__parte equacao__parte--${p.mostrar}`}>
+              <div className="equacao__arte">
+                <Diamante mostrar={p.mostrar} montar={p.mostrar === 'tudo'} ativo={visivel} titulo={p.titulo} />
+              </div>
+              <h3>{p.titulo}</h3>
+              <p className="equacao__sub">{p.sub}</p>
+              <p>{p.texto}</p>
+              {i < simbolo.partes.length - 1 && <span className="equacao__sinal" aria-hidden="true">{i === 0 ? '+' : '='}</span>}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )
+}
+
 function Metodo() {
   return (
-    <section id="metodo" className="secao secao--escura">
+    <section id="metodo" className="secao fundo-magenta listras">
+      <Relampagos className="relampagos--suave" />
+      <Assinatura lado="direita" />
       <div className="container">
         <p className="etiqueta etiqueta--centro">Como pensamos</p>
-        <h2>O Método VIS</h2>
+        <h2 className="titulo-centro">
+          <span className="faixa faixa--fina">o</span> <span className="titulo-poder titulo-poder--medio">Método VIS</span>
+        </h2>
         <p className="secao__sub">Três pilares que orientam cada projeto, do planejamento ao resultado.</p>
         <div className="grade grade--3">
           {metodo.map((m) => (
-            <article key={m.letra} className="pilar">
+            <article key={m.letra} className={`pilar ${m.letra === 'S' ? 'pilar--raio' : ''}`}>
               <span className="pilar__letra" aria-hidden="true">{m.letra}</span>
               <h3>{m.titulo}</h3>
               <p>{m.texto}</p>
+              {m.letra === 'S' && <p className="pilar__nota">O raio: o poder da VIS.</p>}
             </article>
           ))}
         </div>
@@ -102,10 +157,12 @@ function Metodo() {
 
 function Servicos() {
   return (
-    <section id="servicos" className="secao">
+    <section id="servicos" className="secao fundo-escuro">
       <div className="container">
         <p className="etiqueta etiqueta--centro">O que fazemos</p>
-        <h2>Nossos serviços</h2>
+        <h2 className="titulo-centro">
+          <span className="titulo-pesado">Nossos</span> <span className="faixa faixa--fina">serviços</span>
+        </h2>
         <p className="secao__sub">Soluções adaptadas aos objetivos de cada cliente. Contrate um serviço ou combine vários.</p>
         <div className="grade">
           {servicos.map((s) => (
@@ -127,12 +184,54 @@ function Servicos() {
   )
 }
 
+function Criativo({ item }) {
+  const [erro, setErro] = useState(false)
+  return (
+    <figure className="criativo">
+      {erro ? (
+        <div className={`criativo__vazio criativo__vazio--${item.cor}`}>
+          <span className="titulo-pesado">{item.titulo}</span>
+          <small>Adicione a imagem em public/{item.imagem}</small>
+        </div>
+      ) : (
+        <img src={`./${item.imagem}`} alt={item.titulo} loading="lazy" onError={() => setErro(true)} />
+      )}
+      <figcaption>{item.legenda}</figcaption>
+    </figure>
+  )
+}
+
+function Portfolio() {
+  return (
+    <section id="portfolio" className="secao fundo-laranja listras">
+      <GradeFundo />
+      <Assinatura lado="esquerda" />
+      <div className="container">
+        <p className="etiqueta etiqueta--centro">Nossos criativos</p>
+        <h2 className="titulo-centro">
+          <span className="titulo-pesado">Imagem</span> <span className="faixa faixa--fina">é poder de</span>{' '}
+          <span className="titulo-pesado titulo-pesado--branco">impacto</span>
+        </h2>
+        <p className="secao__sub">Alguns dos conteúdos que criamos para as redes.</p>
+        <div className="criativos">
+          {portfolio.map((p) => <Criativo key={p.imagem} item={p} />)}
+        </div>
+        <p className="centro">
+          <a className="botao botao--contorno" href={empresa.instagram} target="_blank" rel="noreferrer">Ver mais no Instagram {empresa.instagramNome}</a>
+        </p>
+      </div>
+    </section>
+  )
+}
+
 function ComoFunciona() {
   return (
-    <section id="como-funciona" className="secao secao--alt">
+    <section id="como-funciona" className="secao fundo-escuro">
       <div className="container">
         <p className="etiqueta etiqueta--centro">Passo a passo</p>
-        <h2>Como funciona</h2>
+        <h2 className="titulo-centro">
+          <span className="titulo-pesado">Como</span> <span className="faixa faixa--fina">funciona</span>
+        </h2>
         <ol className="etapas">
           {etapas.map((e, i) => (
             <li key={e.titulo} className="etapa">
@@ -157,11 +256,17 @@ function Contato() {
     setEnviado(true)
   }
   return (
-    <section id="contato" className="secao">
+    <section id="contato" className="secao fundo-magenta listras">
+      <Relampagos className="relampagos--suave" />
+      <Assinatura lado="direita" />
       <div className="container contato">
         <div>
           <p className="etiqueta">Vamos conversar</p>
-          <h2>Pronto para dar mais poder à sua marca?</h2>
+          <h2 className="titulo-misto">
+            <span className="faixa faixa--fina">pronto para dar mais</span>
+            <span className="titulo-poder titulo-poder--medio">poder</span>
+            <span className="titulo-pesado titulo-pesado--branco">à sua marca?</span>
+          </h2>
           <p className="contato__texto">Conte um pouco sobre o seu negócio. Respondemos pelo WhatsApp.</p>
           <ul className="contato__lista">
             <li><a href={linkWhats()} target="_blank" rel="noreferrer">WhatsApp</a></li>
@@ -170,7 +275,7 @@ function Contato() {
             <li>{empresa.cidade}</li>
           </ul>
         </div>
-        <form className="cartao formulario" onSubmit={enviar}>
+        <form className="cartao cartao--vidro formulario" onSubmit={enviar}>
           <label>Seu nome<input name="nome" required autoComplete="name" /></label>
           <label>Empresa<input name="empresa" autoComplete="organization" /></label>
           <label>Serviço de interesse
@@ -180,7 +285,7 @@ function Contato() {
             </select>
           </label>
           <label>Mensagem<textarea name="mensagem" rows="4" required /></label>
-          <button className="botao" type="submit">Enviar pelo WhatsApp</button>
+          <button className="botao botao--laranja" type="submit">Enviar pelo WhatsApp</button>
           {enviado && <p className="aviso">Abrimos o WhatsApp para você concluir o envio.</p>}
         </form>
       </div>
@@ -195,8 +300,10 @@ export default function App() {
       <main>
         <Hero />
         <Sobre />
+        <Simbolo />
         <Metodo />
         <Servicos />
+        <Portfolio />
         <ComoFunciona />
         <Contato />
       </main>
@@ -204,6 +311,7 @@ export default function App() {
         <div className="container rodape__linha">
           <Logo />
           <p>{empresa.assinatura} © {new Date().getFullYear()} {empresa.nome}</p>
+          <a href={empresa.instagram} target="_blank" rel="noreferrer">{empresa.instagramNome}</a>
         </div>
       </footer>
       <a className="whats-flutuante" href={linkWhats()} target="_blank" rel="noreferrer" aria-label="Falar no WhatsApp">

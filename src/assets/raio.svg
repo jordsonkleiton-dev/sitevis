@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="496 336 180 424" role="img" aria-label="Raio VIS">
+  <defs>
+    <linearGradient id="vis-r" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E100E2"/>
+      <stop offset=".7" stop-color="#7A007C"/>
+      <stop offset="1" stop-color="#7E006D"/>
+    </linearGradient>
+  </defs>
+  <polygon fill="url(#vis-r)" points="560,340 591,390 549,484 564,508 605,415 631,456 604,517 597,506 564,581 499,476"/>
+  <polygon fill="url(#vis-r)" points="633,460 672,524 569,755 536,701 611,530 605,519"/>
+</svg>
