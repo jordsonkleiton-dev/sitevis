@@ -2,6 +2,8 @@
 
 Site da VIS creative — Criatividade e poder. Feito com React + Vite.
 
+> 🎬 Animações e VFX ficam na pasta [`vfx/`](vfx/README.md) (projeto separado, com Remotion).
+
 ## Como rodar no seu computador
 
 ```bash
