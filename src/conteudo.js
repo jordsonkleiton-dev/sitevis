@@ -107,8 +107,22 @@ export const simbolo = {
 }
 
 // Criativos do portfólio: coloque as imagens na pasta public/portfolio/
+// Carrossel = várias imagens na lista "imagens", na ordem dos slides.
 // A seção só aparece no site quando pelo menos uma imagem existir.
 export const portfolio = [
-  { imagem: 'portfolio/clareza-antes-de-conversao.jpg', titulo: 'Clareza antes de conversão', legenda: 'Post: publicidade que não manipula a percepção do lead.', cor: 'laranja' },
-  { imagem: 'portfolio/super-poder.jpg', titulo: 'Super poder', legenda: 'Post: imagem não é só estética, é poder de impacto.', cor: 'magenta' },
+  {
+    imagens: ['portfolio/destrave-o-crescimento-1.webp', 'portfolio/destrave-o-crescimento-2.webp'],
+    titulo: 'Destrave o crescimento',
+    legenda: 'Carrossel: passos simples para destravar o crescimento da marca.',
+  },
+  {
+    imagens: ['portfolio/clareza-antes-de-conversao.webp'],
+    titulo: 'Clareza antes de conversão',
+    legenda: 'Post: publicidade bem-feita não manipula a percepção do lead.',
+  },
+  {
+    imagens: ['portfolio/super-poder.webp'],
+    titulo: 'Super poder',
+    legenda: 'Post: imagem não é só estética, é poder de impacto.',
+  },
 ]

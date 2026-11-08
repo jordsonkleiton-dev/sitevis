@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { empresa, nome, metodo, servicos, etapas, simbolo, portfolio } from './conteudo.js'
 import Icone from './Icone.jsx'
 import Diamante, { useVisivel } from './Diamante.jsx'
@@ -183,17 +183,57 @@ function Servicos() {
   )
 }
 
-// Descobre quais imagens do portfólio já existem
+// Descobre quais imagens do portfólio já existem (as que faltam ficam de fora)
 function useCriativosDisponiveis() {
-  const [ok, setOk] = useState([])
+  const [carregadas, setCarregadas] = useState(() => new Set())
   useEffect(() => {
-    portfolio.forEach((item) => {
+    portfolio.flatMap((p) => p.imagens).forEach((src) => {
       const img = new Image()
-      img.onload = () => setOk((lista) => (lista.includes(item) ? lista : portfolio.filter((p) => p === item || lista.includes(p))))
-      img.src = `./${item.imagem}`
+      img.onload = () => setCarregadas((atual) => new Set(atual).add(src))
+      img.src = `./${src}`
     })
   }, [])
-  return ok
+  return portfolio
+    .map((p) => ({ ...p, imagens: p.imagens.filter((src) => carregadas.has(src)) }))
+    .filter((p) => p.imagens.length > 0)
+}
+
+function Criativo({ item }) {
+  const trilho = useRef(null)
+  const [atual, setAtual] = useState(0)
+  const total = item.imagens.length
+  const ir = (i) => {
+    const el = trilho.current
+    if (el) el.scrollTo({ left: el.clientWidth * i, behavior: 'smooth' })
+  }
+  const aoRolar = () => {
+    const el = trilho.current
+    if (el) setAtual(Math.round(el.scrollLeft / el.clientWidth))
+  }
+  return (
+    <figure className="criativo">
+      <div className="criativo__moldura">
+        <div className="criativo__trilho" ref={trilho} onScroll={aoRolar} tabIndex={total > 1 ? 0 : undefined} aria-label={total > 1 ? `Carrossel ${item.titulo}` : undefined}>
+          {item.imagens.map((src, i) => (
+            <img key={src} src={`./${src}`} alt={total > 1 ? `${item.titulo} (${i + 1} de ${total})` : item.titulo} loading="lazy" width="1080" height="1350" />
+          ))}
+        </div>
+        {total > 1 && (
+          <>
+            <span className="criativo__selo">{atual + 1}/{total}</span>
+            <button className="criativo__seta criativo__seta--ant" onClick={() => ir(atual - 1)} disabled={atual === 0} aria-label="Imagem anterior">‹</button>
+            <button className="criativo__seta criativo__seta--prox" onClick={() => ir(atual + 1)} disabled={atual === total - 1} aria-label="Próxima imagem">›</button>
+            <div className="criativo__pontos">
+              {item.imagens.map((src, i) => (
+                <button key={src} className={i === atual ? 'ativo' : ''} onClick={() => ir(i)} aria-label={`Ir para imagem ${i + 1}`} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <figcaption>{item.legenda}</figcaption>
+    </figure>
+  )
 }
 
 function Portfolio({ itens }) {
@@ -210,12 +250,7 @@ function Portfolio({ itens }) {
         </h2>
         <p className="secao__sub">Alguns dos conteúdos que criamos para as redes.</p>
         <div className="criativos">
-          {itens.map((p) => (
-            <figure key={p.imagem} className="criativo">
-              <img src={`./${p.imagem}`} alt={p.titulo} loading="lazy" />
-              <figcaption>{p.legenda}</figcaption>
-            </figure>
-          ))}
+          {itens.map((p) => <Criativo key={p.titulo} item={p} />)}
         </div>
         <p className="centro">
           <a className="botao botao--contorno" href={empresa.instagram} target="_blank" rel="noreferrer">Ver mais no Instagram {empresa.instagramNome}</a>
