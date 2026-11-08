@@ -6,12 +6,12 @@ export const empresa = {
   chamada: 'Transformamos ideias em conteúdos que chamam atenção, fortalecem marcas e criam oportunidades de negócio.',
   sobre:
     'A VIS Creative é uma empresa de criatividade, produção audiovisual e comunicação estratégica. Atendemos diferentes segmentos, com soluções adaptadas aos objetivos de cada cliente.',
-  // ⚠️ WhatsApp, e-mail e cidade ainda são de exemplo — troque pelos reais
-  whatsapp: '5500000000000', // DDI + DDD + número, só dígitos
-  email: 'contato@exemplo.com',
+  whatsapp: '5584996030620', // DDI + DDD + número, só dígitos
+  telefone: '(84) 99603-0620',
+  email: 'contatoviscreative@gmail.com',
   instagram: 'https://instagram.com/viscreative_',
   instagramNome: '@viscreative_',
-  cidade: 'Sua cidade — atendimento presencial e online',
+  cidade: 'Atendimento presencial e online',
 }
 
 export const nome = {
@@ -107,6 +107,7 @@ export const simbolo = {
 }
 
 // Criativos do portfólio: coloque as imagens na pasta public/portfolio/
+// A seção só aparece no site quando pelo menos uma imagem existir.
 export const portfolio = [
   { imagem: 'portfolio/clareza-antes-de-conversao.jpg', titulo: 'Clareza antes de conversão', legenda: 'Post: publicidade que não manipula a percepção do lead.', cor: 'laranja' },
   { imagem: 'portfolio/super-poder.jpg', titulo: 'Super poder', legenda: 'Post: imagem não é só estética, é poder de impacto.', cor: 'magenta' },

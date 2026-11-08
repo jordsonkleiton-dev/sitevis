@@ -2,7 +2,8 @@ name: Publicar no GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # publica quando houver mudanças na branch principal do repositório
+    branches: [main, claude/beautiful-euler-0lj0si]
   workflow_dispatch:
 
 permissions:

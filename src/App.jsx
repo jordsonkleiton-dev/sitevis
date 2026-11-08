@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { empresa, nome, metodo, servicos, etapas, simbolo, portfolio } from './conteudo.js'
 import Icone from './Icone.jsx'
 import Diamante, { useVisivel } from './Diamante.jsx'
@@ -25,7 +25,7 @@ function Logo() {
   )
 }
 
-function Cabecalho() {
+function Cabecalho({ temPortfolio }) {
   const [aberto, setAberto] = useState(false)
   return (
     <header className="cabecalho">
@@ -35,7 +35,7 @@ function Cabecalho() {
           {aberto ? '✕' : '☰'}
         </button>
         <nav className={`nav ${aberto ? 'nav--aberto' : ''}`}>
-          {menu.map(([href, n]) => (
+          {menu.filter(([href]) => temPortfolio || href !== '#portfolio').map(([href, n]) => (
             <a key={href} href={href} onClick={() => setAberto(false)}>{n}</a>
           ))}
           <a className="botao botao--pequeno" href={linkWhats()} target="_blank" rel="noreferrer">Fale conosco</a>
@@ -184,24 +184,21 @@ function Servicos() {
   )
 }
 
-function Criativo({ item }) {
-  const [erro, setErro] = useState(false)
-  return (
-    <figure className="criativo">
-      {erro ? (
-        <div className={`criativo__vazio criativo__vazio--${item.cor}`}>
-          <span className="titulo-pesado">{item.titulo}</span>
-          <small>Adicione a imagem em public/{item.imagem}</small>
-        </div>
-      ) : (
-        <img src={`./${item.imagem}`} alt={item.titulo} loading="lazy" onError={() => setErro(true)} />
-      )}
-      <figcaption>{item.legenda}</figcaption>
-    </figure>
-  )
+// Descobre quais imagens do portfólio já existem
+function useCriativosDisponiveis() {
+  const [ok, setOk] = useState([])
+  useEffect(() => {
+    portfolio.forEach((item) => {
+      const img = new Image()
+      img.onload = () => setOk((lista) => (lista.includes(item) ? lista : portfolio.filter((p) => p === item || lista.includes(p))))
+      img.src = `./${item.imagem}`
+    })
+  }, [])
+  return ok
 }
 
-function Portfolio() {
+function Portfolio({ itens }) {
+  if (!itens.length) return null
   return (
     <section id="portfolio" className="secao fundo-laranja listras">
       <GradeFundo />
@@ -214,7 +211,12 @@ function Portfolio() {
         </h2>
         <p className="secao__sub">Alguns dos conteúdos que criamos para as redes.</p>
         <div className="criativos">
-          {portfolio.map((p) => <Criativo key={p.imagem} item={p} />)}
+          {itens.map((p) => (
+            <figure key={p.imagem} className="criativo">
+              <img src={`./${p.imagem}`} alt={p.titulo} loading="lazy" />
+              <figcaption>{p.legenda}</figcaption>
+            </figure>
+          ))}
         </div>
         <p className="centro">
           <a className="botao botao--contorno" href={empresa.instagram} target="_blank" rel="noreferrer">Ver mais no Instagram {empresa.instagramNome}</a>
@@ -269,7 +271,7 @@ function Contato() {
           </h2>
           <p className="contato__texto">Conte um pouco sobre o seu negócio. Respondemos pelo WhatsApp.</p>
           <ul className="contato__lista">
-            <li><a href={linkWhats()} target="_blank" rel="noreferrer">WhatsApp</a></li>
+            <li><a href={linkWhats()} target="_blank" rel="noreferrer">WhatsApp {empresa.telefone}</a></li>
             <li><a href={`mailto:${empresa.email}`}>{empresa.email}</a></li>
             <li><a href={empresa.instagram} target="_blank" rel="noreferrer">{empresa.instagramNome}</a></li>
             <li>{empresa.cidade}</li>
@@ -294,16 +296,17 @@ function Contato() {
 }
 
 export default function App() {
+  const criativos = useCriativosDisponiveis()
   return (
     <>
-      <Cabecalho />
+      <Cabecalho temPortfolio={criativos.length > 0} />
       <main>
         <Hero />
         <Sobre />
         <Simbolo />
         <Metodo />
         <Servicos />
-        <Portfolio />
+        <Portfolio itens={criativos} />
         <ComoFunciona />
         <Contato />
       </main>

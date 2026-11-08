@@ -194,14 +194,9 @@ a { color: inherit; }
 /* Portfólio */
 #portfolio .container { padding-left: 60px; }
 .criativos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; max-width: 900px; margin-inline: auto; }
-.criativo img, .criativo__vazio { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 14px; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); transition: transform .3s; }
+.criativo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 14px; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); transition: transform .3s; }
 .criativo:hover img { transform: translateY(-6px) rotate(-.6deg); }
 .criativo figcaption { margin-top: 12px; color: #f3dccb; font-size: .95rem; }
-.criativo__vazio { display: grid; place-content: center; gap: 10px; text-align: center; padding: 20px; font-size: 2rem; }
-.criativo__vazio small { font-size: .85rem; opacity: .8; }
-.criativo__vazio--laranja { background: linear-gradient(170deg, #2a0b00, #b34a00); }
-.criativo__vazio--magenta { background: linear-gradient(160deg, #6d0074, #2a002f); }
-.criativo__vazio--magenta .titulo-pesado { color: #fff; }
 
 /* Como funciona */
 .etapas { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; margin-top: 56px; }
