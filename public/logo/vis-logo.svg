@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="336 438 510 276" role="img" aria-label="VIS creative">
+  <defs>
+    <linearGradient id="vis-d" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E100E2"/>
+      <stop offset=".55" stop-color="#7A007C"/>
+      <stop offset="1" stop-color="#7E006D"/>
+    </linearGradient>
+    <linearGradient id="vis-h" x1="0" y1="0" x2="1" y2=".3">
+      <stop offset="0" stop-color="#E100E2"/>
+      <stop offset=".5" stop-color="#7A007C"/>
+      <stop offset="1" stop-color="#7E006D"/>
+    </linearGradient>
+  </defs>
+  <polygon fill="#400044" points="342,498 395,498 405,586 502,444 525,444 544,466 416,651 364,651"/>
+  <polygon fill="#D66D00" points="559,444 669,444 657,462 574,462"/>
+  <polygon fill="#400044" points="574,465 655,465 582,572 501,572"/>
+  <polygon fill="url(#vis-d)" points="684,465 841,465 806,517 698,517 682,541 789,541 760,583 690,583 697,573 611,572"/>
+  <polygon fill="url(#vis-h)" points="484,596 681,595 687,586 758,586 714,651 446,651"/>
+  <text x="414" y="706" font-family="Lexend, 'Montserrat', 'Segoe UI', sans-serif" font-weight="200" font-size="54" textLength="250" lengthAdjust="spacing" fill="#400044">creative<tspan fill="#D66D00">.</tspan></text>
+</svg>
