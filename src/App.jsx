@@ -165,13 +165,15 @@ function Metodo() {
       <div className="container">
         <p className="etiqueta etiqueta--centro">Como pensamos</p>
         <h2 className="titulo-centro">
-          <span className="faixa faixa--fina">o método</span> <span className="titulo-poder titulo-poder--medio">VIS</span>
+          <span className="faixa faixa--fina">o método</span> <img className="titulo-letras-vis" src="./logo/vis-letras-branco.svg" alt="VIS" />
         </h2>
         <p className="secao__sub">Três pilares que orientam cada projeto, do planejamento ao resultado.</p>
         <div className="grade grade--3">
           {metodo.map((m) => (
             <article key={m.letra} className={`pilar ${m.letra === 'S' ? 'pilar--raio' : ''}`}>
-              <span className="pilar__letra" aria-hidden="true">{m.letra}</span>
+              <span className="pilar__letra" aria-hidden="true">
+                {m.letra === 'S' ? <Diamante mostrar="raio" titulo="" /> : <Letra letra={m.letra} titulo="" />}
+              </span>
               <h3>{m.titulo}</h3>
               <p>{m.texto}</p>
               {m.letra === 'S' && <p className="pilar__nota">O raio: o poder da VIS.</p>}
