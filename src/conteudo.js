@@ -99,9 +99,11 @@ export const simbolo = {
     'Quando se une ao V e ao I, o raio forma um diamante: o nosso símbolo. É ele que une o Método VIS à sua empresa.',
     'Nosso trabalho é lapidar esse diamante. E ele só fica perfeito quando o poder da VIS caminha junto com a empresa.',
   ],
+  // V + I + S = diamante
   partes: [
-    { mostrar: 'raio', titulo: 'O raio', sub: 'S · o poder da VIS', texto: 'Estratégia e criatividade como força para movimentar a sua marca.' },
-    { mostrar: 'vi', titulo: 'V + I', sub: 'Visibilidade e Identidade', texto: 'A essência da sua empresa: quem ela é e como é vista.' },
+    { mostrar: 'V', titulo: 'Visibilidade', sub: 'Letra V', texto: 'Captar atenção e fazer a sua marca ser vista pelas pessoas certas.' },
+    { mostrar: 'I', titulo: 'Identidade', sub: 'Letra I', texto: 'A essência da sua empresa traduzida em uma marca reconhecível.' },
+    { mostrar: 'raio', titulo: 'O raio', sub: 'Letra S · o poder da VIS', texto: 'Estratégia Social: a força que conecta tudo e movimenta a sua marca.' },
     { mostrar: 'tudo', titulo: 'O diamante', sub: 'A sua marca lapidada', texto: 'Quando o poder da VIS acompanha a empresa, a marca brilha.' },
   ],
 }

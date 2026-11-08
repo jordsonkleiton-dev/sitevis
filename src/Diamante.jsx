@@ -57,3 +57,24 @@ export default function Diamante({ mostrar = 'tudo', montar = false, ativo = tru
     </svg>
   )
 }
+
+// Letras V e I da logo oficial (mesmo desenho do arquivo do Illustrator)
+const LETRAS = {
+  V: { viewBox: '1225 372 290 294', partes: [{ cor: '#fff', d: 'M1233.48 450.87L1305.40 450.87L1319.81 569.91L1450.07 378.94L1481.04 378.94L1505.95 407.58L1333.81 657.83L1264.85 657.83Z' }] },
+  I: {
+    viewBox: '1440 372 242 186',
+    partes: [
+      { cor: '#D66D00', d: 'M1657.92 402.48C1658.16 401.82 1666.99 389.32 1674.14 378.94L1525.86 378.94L1546.45 402.48Z' },
+      { cor: '#fff', d: 'M1447.55 550.45L1556.04 550.45L1654.90 406.93L1546.42 406.93L1545.58 408.17Z' },
+    ],
+  },
+}
+
+export function Letra({ letra, titulo }) {
+  const l = LETRAS[letra]
+  return (
+    <svg className="letra-vis" viewBox={l.viewBox} role="img" aria-label={titulo}>
+      {l.partes.map((p) => <path key={p.d} fill={p.cor} d={p.d} />)}
+    </svg>
+  )
+}

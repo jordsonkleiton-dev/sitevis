@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { empresa, nome, metodo, servicos, etapas, simbolo, portfolio } from './conteudo.js'
 import Icone from './Icone.jsx'
-import Diamante, { useVisivel } from './Diamante.jsx'
+import Diamante, { Letra, useVisivel } from './Diamante.jsx'
 import { Relampagos, Assinatura, GradeFundo } from './Efeitos.jsx'
 
 const linkWhats = (msg = 'Olá! Vim pelo site da VIS creative e quero saber mais.') =>
@@ -137,14 +137,18 @@ function Simbolo() {
         </div>
         <ol className={`equacao ${visivel ? 'equacao--visivel' : ''}`}>
           {simbolo.partes.map((p, i) => (
-            <li key={p.titulo} className={`equacao__parte equacao__parte--${p.mostrar}`}>
+            <li key={p.titulo} className={`equacao__parte equacao__parte--${p.mostrar.toLowerCase()}`}>
               <div className="equacao__arte">
-                <Diamante mostrar={p.mostrar} montar={p.mostrar === 'tudo'} ativo={visivel} titulo={p.titulo} />
+                {p.mostrar === 'V' || p.mostrar === 'I' ? (
+                  <Letra letra={p.mostrar} titulo={p.sub} />
+                ) : (
+                  <Diamante mostrar={p.mostrar} montar={p.mostrar === 'tudo'} ativo={visivel} titulo={p.titulo} />
+                )}
               </div>
               <h3>{p.titulo}</h3>
               <p className="equacao__sub">{p.sub}</p>
               <p>{p.texto}</p>
-              {i < simbolo.partes.length - 1 && <span className="equacao__sinal" aria-hidden="true">{i === 0 ? '+' : '='}</span>}
+              {i < simbolo.partes.length - 1 && <span className="equacao__sinal" aria-hidden="true">{i < simbolo.partes.length - 2 ? '+' : '='}</span>}
             </li>
           ))}
         </ol>

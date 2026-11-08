@@ -149,19 +149,22 @@ a { color: inherit; }
 /* Símbolo */
 .simbolo::before { content: ''; position: absolute; z-index: 0; width: 280px; height: 660px; left: 50%; top: 40px; transform: translateX(-50%); background: var(--magenta); opacity: .06; -webkit-mask: var(--raio) center / contain no-repeat; mask: var(--raio) center / contain no-repeat; }
 .simbolo__texto { max-width: 700px; margin: 24px auto 60px; text-align: center; display: grid; gap: 12px; color: var(--texto-suave); font-size: 1.12rem; }
-.equacao { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px; }
-.equacao__parte { position: relative; text-align: center; padding: 34px 26px; border-radius: var(--raio-borda); background: rgba(255, 255, 255, .04); border: 1px solid var(--borda); opacity: 0; transform: translateY(24px); transition: opacity .6s, transform .6s; }
+.equacao { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 44px; }
+.equacao__parte { position: relative; text-align: center; padding: 30px 20px; border-radius: var(--raio-borda); background: rgba(255, 255, 255, .04); border: 1px solid var(--borda); opacity: 0; transform: translateY(24px); transition: opacity .6s, transform .6s; }
 .equacao--visivel .equacao__parte { opacity: 1; transform: none; }
 .equacao--visivel .equacao__parte:nth-child(2) { transition-delay: .2s; }
 .equacao--visivel .equacao__parte:nth-child(3) { transition-delay: .4s; }
+.equacao--visivel .equacao__parte:nth-child(4) { transition-delay: .6s; }
 .equacao__parte--tudo { background: linear-gradient(160deg, #5a0063, #2a002f); border-color: rgba(225, 0, 226, .5); box-shadow: 0 24px 60px rgba(225, 0, 226, .25); }
 .equacao__arte { height: 170px; display: grid; place-items: center; margin-bottom: 18px; }
 .equacao__arte .diamante { height: 170px; width: auto; }
+.letra-vis { display: block; width: auto; max-width: 100%; height: 120px; filter: drop-shadow(0 0 14px rgba(255, 255, 255, .25)); }
+.equacao__parte--raio .diamante { filter: drop-shadow(0 0 16px rgba(212, 0, 236, .5)); }
 .equacao__parte--tudo .diamante { filter: drop-shadow(0 0 22px rgba(225, 0, 226, .6)); }
 .equacao__parte--vi .diamante { filter: drop-shadow(0 0 1px rgba(255, 255, 255, .6)); }
-.equacao__parte h3 { font-family: var(--fonte-poder); font-weight: 400; text-transform: uppercase; font-size: 1.5rem; }
+.equacao__parte h3 { font-family: var(--fonte-poder); font-weight: 400; text-transform: uppercase; font-size: 1.8rem; }
 .equacao__sub { color: var(--laranja-claro) !important; font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .1em; margin: 6px 0 10px; }
-.equacao__sinal { position: absolute; right: -44px; top: 50%; transform: translateY(-50%); width: 32px; text-align: center; font-family: var(--fonte-pesada); font-size: 2.4rem; font-weight: 900; color: var(--laranja-claro); }
+.equacao__sinal { position: absolute; right: -38px; top: 50%; transform: translateY(-50%); width: 32px; text-align: center; font-family: var(--fonte-pesada); font-size: 2.4rem; font-weight: 900; color: var(--laranja-claro); }
 
 /* Diamante: o raio cai e o V + I se encaixam */
 .diamante { display: block; overflow: visible; }
@@ -251,6 +254,11 @@ a { color: inherit; }
 .whats-flutuante { position: fixed; right: 20px; bottom: 20px; width: 58px; height: 58px; border-radius: 50%; background: #25d366; display: grid; place-items: center; box-shadow: 0 6px 20px rgba(0, 0, 0, .35); z-index: 20; }
 
 /* Celular e tablet */
+@media (max-width: 1100px) and (min-width: 641px) {
+  .equacao { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .equacao__sinal { display: none; }
+}
+
 @media (max-width: 900px) {
   .menu-botao { display: block; }
   .nav { display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; background: #14001a; padding: 20px; border-bottom: 1px solid var(--borda); }
@@ -261,6 +269,11 @@ a { color: inherit; }
   .hero__simbolo { height: 210px; }
   .assinatura { display: none; }
   .secao { padding: 80px 0; }
+
+  .equacao__sinal { right: 50%; top: auto; bottom: -50px; transform: translateX(50%); }
+}
+
+@media (max-width: 640px) {
   .equacao { grid-template-columns: 1fr; gap: 52px; }
   .equacao__sinal { right: 50%; top: auto; bottom: -50px; transform: translateX(50%); }
 }
