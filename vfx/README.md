@@ -17,14 +17,19 @@ de cada animação. Edite o código e a prévia atualiza na hora.
 ## Gerar os vídeos
 
 ```bash
-# Fundo verde (chroma key) — para CapCut e qualquer editor
-npm run render -- DiamanteVertical out/diamante-vertical-verde.mp4 --crf=14
-
-# Fundo transparente (ProRes 4444) — Premiere, After Effects, DaVinci
-npm run render -- DiamanteVertical out/diamante-vertical-transparente.mov --codec=prores --prores-profile=4444 --image-format=png --pixel-format=yuva444p10le --props='{"fundo":"transparente"}'
+npm run exportar            # todas as animações
+npm run exportar -- Branco  # só as que têm "Branco" no nome
 ```
 
-Os vídeos vão para `vfx/out/` (essa pasta não vai para o Git).
+Para cada animação sai um **MP4 com fundo verde** (para CapCut e qualquer editor)
+e, no formato vertical, um **MOV com fundo transparente** (ProRes 4444, para
+Premiere, After Effects e DaVinci). Os vídeos vão para `vfx/out/` (fora do Git).
+
+O MP4 é gerado a partir de um mestre sem perda de cor e convertido com cuidado
+nas bordas, o que deixa o recorte do verde mais limpo.
+
+**Dica no CapCut:** depois do *Chroma key*, suba um pouco a **Sombra** para tirar
+o fio de verde que pode sobrar no contorno.
 
 ## Animações
 
@@ -33,6 +38,10 @@ Os vídeos vão para `vfx/out/` (essa pasta não vai para o Git).
 | `DiamanteVertical`   | 1080 × 1920 | Reels, Stories, TikTok |
 | `DiamanteQuadrado`   | 1080 × 1080 | Feed                   |
 | `DiamanteHorizontal` | 1920 × 1080 | YouTube, telas         |
+
+Cada uma tem a versão **toda branca**: `DiamanteBrancoVertical`,
+`DiamanteBrancoQuadrado` e `DiamanteBrancoHorizontal`. Nela, a linha de luz
+final vira um corte que atravessa o diamante.
 
 60 fps, 4 segundos. Roteiro: faísca cai → explode em raios → os raios voltam
 desenhando o contorno de cada peça → a cor varre as peças → linha de luz →
