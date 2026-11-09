@@ -74,3 +74,53 @@ export function varredura(pontos, u, progresso) {
 }
 
 export const emTexto = (pts) => pts.map((p) => p.join(',')).join(' ')
+
+// Raio "de verdade": curva de I até T (passando perto de C) quebrada em
+// zigue-zague irregular por deslocamento do ponto médio (vários níveis).
+export function raioFractal(I, C, T, semente, { trecho: base = 110, forca = 0.2, niveis = 3 } = {}) {
+  const r = aleatorio(semente)
+  const curva = (t) => [
+    (1 - t) ** 2 * I[0] + 2 * (1 - t) * t * C[0] + t * t * T[0],
+    (1 - t) ** 2 * I[1] + 2 * (1 - t) * t * C[1] + t * t * T[1],
+  ]
+  let comp = 0
+  for (let i = 1; i <= 40; i++) comp += dist(curva((i - 1) / 40), curva(i / 40))
+  const n = Math.max(2, Math.round(comp / base))
+  let pts = Array.from({ length: n + 1 }, (_, i) => curva(i / n))
+  for (let nivel = 0; nivel < niveis; nivel++) {
+    const novo = [pts[0]]
+    for (let i = 1; i < pts.length; i++) {
+      const a = pts[i - 1], b = pts[i]
+      const l = dist(a, b)
+      const desvio = (r() * 2 - 1) * l * forca
+      novo.push([(a[0] + b[0]) / 2 - ((b[1] - a[1]) / l) * desvio, (a[1] + b[1]) / 2 + ((b[0] - a[0]) / l) * desvio], b)
+    }
+    pts = novo
+  }
+  return pts
+}
+
+// Direção da linha na distância d
+export function direcaoEm(pts, cum, d) {
+  const a = pontoEm(pts, cum, Math.max(0, d - 6)), b = pontoEm(pts, cum, d + 6)
+  return Math.atan2(b[1] - a[1], b[0] - a[0])
+}
+
+// Pedaços curtos entre a e b (para desenhar com espessura variável)
+export function pedacos(pts, cum, a, b, passo = 6) {
+  const res = []
+  const n = Math.max(1, Math.ceil((b - a) / passo))
+  let anterior = pontoEm(pts, cum, a)
+  for (let i = 1; i <= n; i++) {
+    // inclui os vértices no meio para não "cortar" os bicos do zigue-zague
+    const d0 = a + ((i - 1) * (b - a)) / n, d1 = a + (i * (b - a)) / n
+    const meio = []
+    for (let k = 0; k < pts.length; k++) if (cum[k] > d0 && cum[k] < d1) meio.push(pts[k])
+    const fim = pontoEm(pts, cum, d1)
+    res.push({ pts: [anterior, ...meio, fim], d: (d0 + d1) / 2 })
+    anterior = fim
+  }
+  return res
+}
+
+export { pontoEm }

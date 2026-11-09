@@ -1,5 +1,5 @@
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame, useVideoConfig } from 'remotion'
-import { comprimentos, emTexto, trecho, varredura, zigueZague } from '../lib/geometria'
+import { aleatorio, comprimentos, direcaoEm, emTexto, pedacos, pontoEm, raioFractal, varredura } from '../lib/geometria'
 import { alturaDiamante, borda, centro, pecas } from '../lib/diamante'
 import { cores } from '../lib/marca'
 
@@ -9,20 +9,52 @@ import { cores } from '../lib/marca'
 // Feito para chroma key: sem brilho, sem desfoque e sem transparência.
 
 const FUNDOS = { verde: '#00FF00', transparente: 'transparent' }
+const BRANCO = cores.texto
 
 const IMPACTO = 30 // frame em que a faísca bate
 const DURACAO_RAIO = 64
 const ATRASO_CAUDA = 12
-const ESPESSURA = 4.5
+const ESPESSURA = 6.4 // espessura na ponta do raio
+// Linhas mais finas que isso ficam esverdeadas no recorte (compressão do MP4)
+const ESPESSURA_MINIMA = 3.6
+const AFINAMENTO = 160 // quanto do raio, a partir da cauda, vai afinando
 const DURACAO_COR = 18
 
 const curvaRaio = Easing.bezier(0.45, 0, 0.15, 1)
 const suave = Easing.bezier(0.33, 0, 0.2, 1)
 const limitar = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
+const progresso = (t) => curvaRaio(interpolate(t, [0, DURACAO_RAIO], [0, 1], limitar))
 
-const polar = (angulo, raio) => {
+const polar = (angulo, raio, de = centro) => {
   const a = (angulo * Math.PI) / 180
-  return [centro[0] + Math.cos(a) * raio, centro[1] + Math.sin(a) * raio]
+  return [de[0] + Math.cos(a) * raio, de[1] + Math.sin(a) * raio]
+}
+
+// Frame (relativo ao início do raio) em que a ponta passa pela distância d
+const quandoPassa = (raio, d) => {
+  for (let t = 0; t <= DURACAO_RAIO; t += 0.25) if (progresso(t) * raio.total >= d) return t
+  return DURACAO_RAIO
+}
+
+// Galhos: pequenas ramificações que nascem quando a ponta passa e somem rápido
+function criarGalhos(raio, ate) {
+  const r = aleatorio(raio.semente * 7 + 1)
+  return [0.28, 0.5, 0.7].map((frac, k) => {
+    const d = ate * (frac + (r() - 0.5) * 0.08)
+    const origem = pontoEm(raio.pts, raio.cum, d)
+    const ang = (direcaoEm(raio.pts, raio.cum, d) * 180) / Math.PI + (k % 2 ? 1 : -1) * (28 + r() * 22)
+    const comp = 60 + r() * 70
+    const pts = raioFractal(origem, polar(ang + (r() - 0.5) * 30, comp * 0.6, origem), polar(ang, comp, origem), raio.semente * 13 + k, { trecho: 40, forca: 0.25, niveis: 2 })
+    return { pts, cum: comprimentos(pts), total: comprimentos(pts).at(-1), nasce: raio.atraso + quandoPassa(raio, d) }
+  })
+}
+
+function montar(r, voo, contorno = []) {
+  const pts = [...voo, ...contorno.slice(1)]
+  const cum = comprimentos(pts)
+  const raio = { ...r, pts, cum, voo: comprimentos(voo).at(-1), total: cum.at(-1) }
+  raio.galhos = criarGalhos(raio, raio.voo)
+  return raio
 }
 
 // Raios que terminam desenhando uma peça
@@ -35,10 +67,7 @@ const RAIOS_PECA = [
   { peca: 'laranja', de: 3, ate: 3, sentido: -1, angulo: -175, alcance: 620, atraso: 9, cor: cores.laranjaClaro, semente: 55 },
 ].map((r) => {
   const contorno = borda(pecas[r.peca], r.de, r.ate, r.sentido)
-  const voo = zigueZague(centro, polar(r.angulo, r.alcance), contorno[0], r.semente)
-  const pts = [...voo, ...contorno.slice(1)]
-  const cum = comprimentos(pts)
-  return { ...r, pts, cum, voo: comprimentos(voo).at(-1), total: cum.at(-1) }
+  return montar(r, raioFractal(centro, polar(r.angulo, r.alcance), contorno[0], r.semente), contorno)
 })
 
 // Raios que só cruzam a tela e somem
@@ -47,15 +76,22 @@ const RAIOS_SOLTOS = [
   { angulo: 15, atraso: 2, cor: cores.laranjaClaro, semente: 144 },
   { angulo: 100, atraso: 4, cor: cores.magenta, semente: 233 },
   { angulo: -60, atraso: 6, cor: '#f3b6f5', semente: 377 },
-].map((r) => {
-  const pts = zigueZague(centro, polar(r.angulo + 30, 450), polar(r.angulo, 1100), r.semente)
-  const cum = comprimentos(pts)
-  return { ...r, pts, cum, voo: cum.at(-1), total: cum.at(-1) }
-})
+].map((r) => montar(r, raioFractal(centro, polar(r.angulo + 30, 450), polar(r.angulo, 1100), r.semente)))
 
 // Quando cada peça recebe cor (logo depois que o contorno fecha)
 const inicioCor = (peca) =>
   Math.max(...RAIOS_PECA.filter((r) => r.peca === peca).map((r) => IMPACTO + r.atraso + DURACAO_RAIO)) - 6
+
+// Estalo onde o contorno de cada peça se fecha
+const ESTALOS = Object.keys(pecas).map((peca, k) => {
+  const raios = RAIOS_PECA.filter((r) => r.peca === peca)
+  const ultimo = raios.reduce((a, b) => (a.atraso > b.atraso ? a : b))
+  return {
+    ponto: ultimo.pts.at(-1),
+    frame: IMPACTO + ultimo.atraso + quandoPassa(ultimo, ultimo.total - 3),
+    giro: k * 23,
+  }
+})
 
 // Direção em que a cor varre cada peça (de baixo para cima, ao longo da peça)
 const DIRECAO_COR = {
@@ -65,18 +101,56 @@ const DIRECAO_COR = {
   laranja: [0.4, -0.92],
 }
 
+// Desenha o trecho [cauda, cabeca] afinando da ponta para a cauda
+function Tracado({ pts, cum, cauda, cabeca, limiteAfinar, espessura, cor, afinamento = AFINAMENTO, minima = ESPESSURA_MINIMA }) {
+  if (cabeca - cauda < 0.5 || espessura <= 0) return null
+  return pedacos(pts, cum, cauda, cabeca).map((p, i) => {
+    const afina = p.d < limiteAfinar ? Math.min(1, (p.d - cauda) / afinamento) : 1
+    const fina = Math.min(espessura, minima)
+    const w = fina + (espessura - fina) * Math.max(0, afina) ** 0.8
+    return <polyline key={i} points={emTexto(p.pts)} fill="none" stroke={cor} strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" />
+  })
+}
+
 function Linha({ raio, frame }) {
   const f = frame - IMPACTO - raio.atraso
   if (f < 0) return null
-  const progresso = (t) => curvaRaio(interpolate(t, [0, DURACAO_RAIO], [0, 1], limitar))
   const cabeca = progresso(f) * raio.total
   const cauda = Math.min(progresso(f - ATRASO_CAUDA) * raio.total, raio.voo)
   // depois que a peça ganha cor, o contorno afina até sumir
   const fimCor = raio.peca ? inicioCor(raio.peca) + DURACAO_COR : null
   const espessura = fimCor === null ? ESPESSURA : interpolate(frame, [fimCor - 4, fimCor + 6], [ESPESSURA, 0], limitar)
-  const d = trecho(raio.pts, raio.cum, cauda, cabeca)
-  if (!d || cabeca - cauda < 1 || espessura <= 0) return null
-  return <path d={d} fill="none" stroke={raio.cor} strokeWidth={espessura} strokeLinecap="round" strokeLinejoin="round" />
+  // núcleo branco atrás da ponta: maior quanto mais rápido o raio anda
+  const velocidade = cabeca - progresso(f - 1) * raio.total
+  const nucleo = Math.min(70, velocidade * 3.5, Math.max(0, cabeca - cauda - 20))
+  return (
+    <g>
+      {raio.galhos.map((g, i) => {
+        const fg = f - (g.nasce - raio.atraso)
+        if (fg < 0) return null
+        const cab = Easing.out(Easing.cubic)(Math.min(1, fg / 8)) * g.total
+        const cau = Easing.in(Easing.quad)(Math.min(1, Math.max(0, (fg - 4) / 8))) * g.total
+        return <Tracado key={i} pts={g.pts} cum={g.cum} cauda={cau} cabeca={cab} limiteAfinar={Infinity} espessura={4.6} cor={raio.cor} afinamento={50} />
+      })}
+      <Tracado pts={raio.pts} cum={raio.cum} cauda={cauda} cabeca={cabeca} limiteAfinar={raio.voo} espessura={espessura} cor={raio.cor} />
+      {nucleo > 2 && espessura > 0 && (
+        <Tracado pts={raio.pts} cum={raio.cum} cauda={cabeca - nucleo} cabeca={cabeca} limiteAfinar={Infinity} espessura={2.6} cor={BRANCO} afinamento={nucleo} minima={1.2} />
+      )}
+    </g>
+  )
+}
+
+function Estalo({ estalo, frame }) {
+  const f = frame - estalo.frame
+  if (f < 0 || f > 12) return null
+  const cab = Easing.out(Easing.cubic)(Math.min(1, f / 6))
+  const cau = Easing.in(Easing.quad)(Math.min(1, Math.max(0, (f - 2) / 10)))
+  return [0, 72, 144, 216, 288].map((a, i) => {
+    const comp = i % 2 ? 13 : 22
+    const ang = a + estalo.giro
+    const p0 = polar(ang, 9 + comp * cau, estalo.ponto), p1 = polar(ang, 9 + comp * cab, estalo.ponto)
+    return <line key={i} x1={p0[0]} y1={p0[1]} x2={p1[0]} y2={p1[1]} stroke="#f45cff" strokeWidth={4} strokeLinecap="round" />
+  })
 }
 
 export const DiamanteRevelacao = ({ fundo = 'verde' }) => {
@@ -97,7 +171,8 @@ export const DiamanteRevelacao = ({ fundo = 'verde' }) => {
 
   // 2. Anel do impacto
   const anel = interpolate(frame, [IMPACTO, IMPACTO + 22], [0, 1], { ...limitar, easing: Easing.out(Easing.cubic) })
-  const espessuraAnel = interpolate(anel, [0, 1], [5, 0])
+  // o anel se parte em 10 arcos que encolhem até sumir (espessura fixa)
+  const arco = interpolate(anel, [0.25, 1], [0.1, 0], limitar)
 
   // 4. Assentamento do diamante depois que todas as peças têm cor
   const fimCores = Math.max(...Object.keys(pecas).map(inicioCor)) + DURACAO_COR
@@ -138,8 +213,9 @@ export const DiamanteRevelacao = ({ fundo = 'verde' }) => {
         )}
 
         {/* 2. anel do impacto */}
-        {espessuraAnel > 0 && anel > 0 && (
-          <circle cx={centro[0]} cy={centro[1]} r={anel * 90} fill="none" stroke={cores.texto} strokeWidth={espessuraAnel} />
+        {arco > 0.002 && anel > 0 && (
+          <circle cx={centro[0]} cy={centro[1]} r={12 + anel * 90} fill="none" stroke="#f45cff" strokeWidth={4}
+            pathLength={1} strokeDasharray={`${arco} ${0.1 - arco}`} strokeDashoffset={-anel * 0.05} strokeLinecap="round" />
         )}
 
         <g transform={`translate(${centro[0]} ${centro[1]}) scale(${pulso}) translate(${-centro[0]} ${-centro[1]})`}>
@@ -161,6 +237,7 @@ export const DiamanteRevelacao = ({ fundo = 'verde' }) => {
         </g>
 
         {RAIOS_SOLTOS.map((r, i) => <Linha key={i} raio={r} frame={frame} />)}
+        {ESTALOS.map((e, i) => <Estalo key={i} estalo={e} frame={frame} />)}
       </svg>
     </AbsoluteFill>
   )

@@ -41,8 +41,9 @@ diamante parado por ~1,5 s.
 ### Regras para o chroma key ficar limpo
 
 - Nada de brilho, desfoque ou transparência sobre o fundo verde.
-- Linhas finas só em cores vivas (magenta, rosa, laranja). Linhas finas e
-  escuras ficam esverdeadas depois da compressão do MP4.
+- Linhas finas só em cores vivas (magenta, rosa, laranja) e nunca mais finas
+  que `ESPESSURA_MINIMA` (~6 px): abaixo disso a compressão do MP4 mistura a
+  linha com o verde e ela fica esverdeada no recorte.
 - Nenhuma cor verde na animação.
 
 ## Organização
@@ -50,7 +51,7 @@ diamante parado por ~1,5 s.
 - `src/Raiz.jsx` — lista das animações (nome, tamanho, fps, duração)
 - `src/composicoes/DiamanteRevelacao.jsx` — a revelação do diamante (tempos no topo do arquivo)
 - `src/lib/diamante.js` — peças do diamante (mesmas coordenadas da logo)
-- `src/lib/geometria.js` — raios em zigue-zague, linhas que se desenham, varredura de cor
+- `src/lib/geometria.js` — raio fractal, galhos, linhas que se desenham, varredura de cor
 - `src/lib/marca.js` — cores e fontes da VIS
 - `public/` — logos (SVG) e fontes; use com `staticFile('logo/...')`
 
