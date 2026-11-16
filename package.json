@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mentoria": "vite --config mentoria/vite.config.js",
+    "mentoria:build": "vite build --config mentoria/vite.config.js"
   },
   "dependencies": {
     "react": "^18.3.1",

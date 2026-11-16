@@ -1,0 +1,80 @@
+/* Apresentação da mentoria: herda cores, fontes e efeitos de ../../src/styles.css */
+html, body, #root { height: 100%; overflow: hidden; background: #000; }
+.tela { position: fixed; inset: 0; cursor: pointer; user-select: none; }
+.palco { position: absolute; left: 50%; top: 50%; overflow: hidden; }
+.slide { position: absolute; inset: 0; overflow: hidden; isolation: isolate; font-size: 30px; color: var(--texto); }
+.slide .etiqueta { font-size: 22px; margin-bottom: 22px; }
+.slide .assinatura { font-size: 24px; }
+
+.slide__rodape { position: absolute; left: 110px; right: 110px; bottom: 44px; z-index: 2; display: flex; align-items: center; gap: 28px; font-size: 20px; color: var(--texto-suave); }
+.slide__rodape img { height: 38px; }
+.slide__rodape span { flex: 1; text-transform: uppercase; letter-spacing: .16em; font-weight: 600; font-size: 16px; }
+.slide__rodape b { font-weight: 600; color: #fff; }
+.slide__progresso { position: absolute; left: 0; bottom: 0; height: 6px; background: linear-gradient(90deg, var(--laranja-claro), var(--magenta)); transition: width .6s ease; }
+
+/* Entrada do slide e dos passos */
+.slide > *:not(.slide__rodape):not(.slide__progresso) { animation: entrar .7s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes entrar { from { opacity: 0; transform: translateY(40px); } }
+.passo { opacity: 0; transform: translateY(30px) scale(.98); transition: opacity .5s ease, transform .6s cubic-bezier(.2, .9, .3, 1.15); }
+.passo--on { opacity: 1; transform: none; }
+
+.conteudo { position: relative; z-index: 1; height: 100%; padding: 100px 110px 130px; display: flex; flex-direction: column; justify-content: center; }
+.conteudo h2 { font-size: 84px; line-height: 1; margin-bottom: 60px; }
+.conteudo h2 .faixa { font-size: .8em; }
+.conteudo h2 .faixa--fina { font-size: .62em; }
+
+/* Capa */
+.capa { position: relative; height: 100%; display: grid; grid-template-columns: 1fr 520px; gap: 60px; align-items: center; padding: 0 140px; }
+.capa--centro { grid-template-columns: 1fr; text-align: center; }
+.capa__texto, .capa__arte, .capa--centro > div { position: relative; z-index: 1; }
+.capa h1 { display: grid; justify-items: start; margin-bottom: 40px; }
+.capa__linha { font-size: 104px; line-height: .95; }
+.capa__poder { font-size: 230px; line-height: .8; }
+.capa__sub { font-size: 38px; max-width: 900px; color: var(--texto-suave); line-height: 1.35; }
+.capa__sub strong { color: #fff; }
+.capa__sub--centro { margin: 30px auto 0; }
+.capa__arte { display: grid; place-items: center; }
+.capa__diamante { height: 620px; width: auto; filter: drop-shadow(0 0 40px rgba(225, 0, 226, .6)); }
+.duvidas__titulo { font-size: 340px; line-height: .85; }
+
+/* Trilha das 5 etapas */
+.trilha { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; }
+.trilha__item { background: rgba(255, 255, 255, .05); border: 1px solid var(--borda); border-radius: 24px; padding: 40px 32px; min-height: 520px; }
+.trilha__icone { height: 150px; display: flex; align-items: center; margin-bottom: 30px; }
+.trilha__icone .letra-vis, .trilha__icone .diamante { height: 130px; width: auto; }
+.trilha__icone .diamante__raio polygon { fill: #fff; }
+.trilha__num { font-family: var(--fonte-poder); font-size: 150px; line-height: 1; color: var(--laranja-claro); }
+.trilha__item h3 { font-size: 38px; margin-bottom: 14px; }
+.trilha__item p { color: var(--texto-suave); font-size: 28px; line-height: 1.35; }
+
+/* Perguntas de diagnóstico */
+.perguntas { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 40px; }
+.pergunta { display: grid; grid-template-columns: 90px 1fr; gap: 6px 28px; background: rgba(255, 255, 255, .05); border-left: 6px solid var(--magenta); border-radius: 0 20px 20px 0; padding: 34px 40px; }
+.pergunta__num { grid-row: span 2; font-family: var(--fonte-pesada); font-weight: 900; font-size: 64px; color: var(--laranja-claro); line-height: 1; }
+.pergunta__texto { font-size: 38px; font-weight: 600; line-height: 1.2; color: #fff; }
+.pergunta__porque { font-size: 26px; color: var(--texto-suave); font-style: italic; }
+
+/* Mapa de direção */
+.mapa { display: grid; gap: 16px; }
+.mapa__cab, .mapa__linha { display: grid; grid-template-columns: 1.35fr .75fr 1.5fr; gap: 30px; align-items: center; padding: 0 40px; }
+.mapa__cab { text-transform: uppercase; letter-spacing: .14em; font-size: 20px; font-weight: 600; color: var(--texto-suave); }
+.mapa__linha { background: rgba(14, 0, 16, .55); border: 1px solid var(--borda); border-radius: 20px; padding: 24px 40px; font-size: 30px; line-height: 1.25; min-height: 120px; }
+.mapa__dor { font-weight: 600; color: #fff; font-size: 34px; }
+.mapa__foco { justify-self: start; background: var(--laranja); color: #fff; font-weight: 600; padding: 6px 20px; border-radius: 999px; font-size: 26px; }
+
+/* Fórmula do roteiro */
+.formula { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+.formula__bloco { background: rgba(14, 0, 16, .6); border: 1px solid rgba(255, 255, 255, .16); border-radius: 26px; padding: 46px 40px; min-height: 520px; }
+.formula__titulo { display: block; font-size: 96px; line-height: 1; }
+.formula__tempo { display: inline-block; margin: 18px 0 28px; background: var(--magenta); color: #fff; padding: 4px 18px; border-radius: 999px; font-weight: 600; font-size: 24px; }
+.formula__bloco p { font-size: 34px; line-height: 1.3; }
+.formula__ex { margin-top: 26px; color: var(--laranja-claro); font-style: italic; font-size: 30px !important; }
+
+/* Notas do mentor */
+.notas { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); width: min(900px, 94vw); background: rgba(14, 0, 16, .94); border: 1px solid var(--borda); border-radius: 16px; padding: 18px 22px; font-size: 16px; z-index: 10; cursor: default; }
+.notas p { margin: 6px 0 10px; color: var(--texto-suave); }
+.notas small { color: #8a7a8c; }
+
+@media (prefers-reduced-motion: reduce) {
+  .passo, .slide > * { transition: none !important; animation: none !important; }
+}
