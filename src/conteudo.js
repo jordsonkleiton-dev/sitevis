@@ -128,3 +128,36 @@ export const portfolio = [
     legenda: 'Post: imagem não é só estética, é poder de impacto.',
   },
 ]
+
+// Mentoria "Vídeos que vendem" (página pública, sem preço)
+export const mentoria = {
+  chamada: 'Para empresas que vendem no Instagram mas travam na hora do vídeo: o que falar, como falar do produto e como gravar só com o celular.',
+  paraQuem: [
+    'Você vende pelo Instagram, mas não sabe o que postar.',
+    'Tem vergonha de aparecer ou não sabe como falar do seu produto.',
+    'Posta, mas o vídeo não chega em gente nova.',
+    'Tem visualizações, mas elas não viram venda.',
+  ],
+  etapas: [
+    { titulo: 'Diagnóstico', texto: 'Antes de qualquer dica, entendemos o seu produto, o seu cliente e onde está o seu bloqueio.' },
+    { titulo: 'Visibilidade', texto: 'Como o Instagram leva o seu vídeo para quem ainda não te conhece, e um perfil que converte.' },
+    { titulo: 'Identidade', texto: 'O que falar e como falar do seu produto, com a língua do seu cliente.' },
+    { titulo: 'Estratégia Social', texto: 'Gancho, roteiro, gravação no celular e o caminho do vídeo até o WhatsApp.' },
+    { titulo: 'Plano e dúvidas', texto: 'Seu plano de 30 dias e espaço aberto para tirar todas as dúvidas.' },
+  ],
+  entregas: [
+    'O roteiro do seu primeiro vídeo, escrito junto com você',
+    'Um banco de pautas tirado das perguntas dos seus clientes',
+    'Ganchos e modelos de roteiro prontos para adaptar',
+    'Um plano de 30 dias com rotina possível para a sua agenda',
+  ],
+  formato: 'Mentoria individual, online ou presencial.',
+  dificuldades: [
+    'Não sei o que postar',
+    'Tenho vergonha de aparecer',
+    'Posto, mas ninguém vê',
+    'Tenho visualizações, mas não vendo',
+    'Não tenho tempo para produzir',
+    'Outra',
+  ],
+}
