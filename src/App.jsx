@@ -12,6 +12,7 @@ const menu = [
   ['#simbolo', 'O símbolo'],
   ['#metodo', 'Método VIS'],
   ['#servicos', 'Serviços'],
+  ['#mentoria', 'Mentoria'],
   ['#portfolio', 'Criativos'],
   ['#contato', 'Contato'],
 ]
@@ -291,6 +292,65 @@ function Portfolio({ itens }) {
   )
 }
 
+function Mentoria({ escolher }) {
+  return (
+    <section id="mentoria" className="secao fundo-magenta listras mentoria">
+      <Relampagos className="relampagos--suave" />
+      <Assinatura lado="direita" />
+      <div className="container">
+        <p className="etiqueta etiqueta--centro">{mentoria.chamada}</p>
+        <h2 className="titulo-centro mentoria__titulo">
+          <span className="faixa faixa--fina">vídeos que</span>
+          <span className="titulo-poder">Vendem</span>
+        </h2>
+        <p className="secao__sub">{mentoria.subtitulo}</p>
+
+        <div className="mentoria__grade">
+          <div className="cartao cartao--vidro">
+            <h3 className="mentoria__h3">Como é o encontro</h3>
+            <ul className="mentoria__lista">
+              {mentoria.encontro.map((e) => (
+                <li key={e.titulo}><strong>{e.titulo}</strong><span>{e.texto}</span></li>
+              ))}
+            </ul>
+          </div>
+          <div className="cartao cartao--vidro">
+            <h3 className="mentoria__h3">O que vamos trabalhar</h3>
+            <ol className="mentoria__roteiro">
+              {mentoria.roteiro.map((r) => (
+                <li key={r.titulo}><strong>{r.titulo}</strong><span>{r.texto}</span></li>
+              ))}
+            </ol>
+          </div>
+        </div>
+
+        <h3 className="mentoria__subtitulo">Se você diz…</h3>
+        <ul className="mentoria__dores">
+          {mentoria.dores.map((d) => (
+            <li key={d.dor}><span className="mentoria__dor">“{d.dor}”</span><span className="mentoria__solucao">{d.solucao}</span></li>
+          ))}
+        </ul>
+
+        <h3 className="mentoria__subtitulo">Você sai com um plano de 30 dias</h3>
+        <ol className="mentoria__plano">
+          {mentoria.plano.map((p) => (
+            <li key={p.semana} className="cartao cartao--vidro">
+              <span className="mentoria__semana">{p.semana}</span>
+              <strong>{p.titulo}</strong>
+              <p>{p.texto}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mentoria__cta">
+          <a className="botao botao--laranja" href="#contato" onClick={() => escolher(mentoria.nome)}>Quero a mentoria</a>
+          <a className="botao botao--contorno" href={linkWhats(`Olá! ${mentoria.mensagem}`)} target="_blank" rel="noreferrer">Tirar dúvidas no WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function ComoFunciona() {
   return (
     <section id="como-funciona" className="secao fundo-escuro">
@@ -313,7 +373,7 @@ function ComoFunciona() {
   )
 }
 
-function Contato() {
+function Contato({ escolha, setEscolha }) {
   const [enviado, setEnviado] = useState(false)
   function enviar(e) {
     e.preventDefault()
@@ -348,7 +408,7 @@ function Contato() {
           <label>Seu nome<input name="nome" required autoComplete="name" /></label>
           <label>Empresa<input name="empresa" autoComplete="organization" /></label>
           <label>O que você procura?
-            <select name="servico" defaultValue="Ainda não sei">
+            <select name="servico" value={escolha} onChange={(e) => setEscolha(e.target.value)}>
               <option>Ainda não sei</option>
               <optgroup label="Comprar">
                 <option>{mentoria.nome}</option>
@@ -369,6 +429,7 @@ function Contato() {
 
 export default function App() {
   const criativos = useCriativosDisponiveis()
+  const [escolha, setEscolha] = useState('Ainda não sei')
   return (
     <>
       <Cabecalho temPortfolio={criativos.length > 0} />
@@ -378,9 +439,10 @@ export default function App() {
         <Simbolo />
         <Metodo />
         <Servicos />
+        <Mentoria escolher={setEscolha} />
         <Portfolio itens={criativos} />
         <ComoFunciona />
-        <Contato />
+        <Contato escolha={escolha} setEscolha={setEscolha} />
       </main>
       <footer className="rodape">
         <div className="container rodape__linha">

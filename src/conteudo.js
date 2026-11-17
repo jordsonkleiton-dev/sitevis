@@ -14,10 +14,39 @@ export const empresa = {
   cidade: 'Atendimento presencial e online',
 }
 
-// Mentoria: aparece como opção de compra no formulário de contato
+// Mentoria (conteúdo da apresentação "Vídeos que Vendem")
+// Também aparece como opção de compra no formulário de contato.
 export const mentoria = {
-  nome: 'Mentoria VIS',
-  mensagem: 'Quero comprar a Mentoria VIS. Pode me passar os detalhes?',
+  nome: 'Mentoria Vídeos que Vendem',
+  chamada: 'Mentoria VIS creative',
+  subtitulo: 'Para alcançar novos clientes no Instagram e transformar visualizações em vendas.',
+  mensagem: 'Quero comprar a mentoria Vídeos que Vendem. Pode me passar os detalhes?',
+  encontro: [
+    { titulo: 'Primeiro eu escuto', texto: 'Começamos pelo diagnóstico da sua empresa. Nada de receita pronta.' },
+    { titulo: 'Depois, o método', texto: 'Visibilidade, Identidade e Estratégia Social aplicados ao seu produto.' },
+    { titulo: 'Mão na massa', texto: 'Você sai com o roteiro do seu primeiro vídeo escrito.' },
+    { titulo: 'Pergunte à vontade', texto: 'Dúvida pode a qualquer momento. Ela é o melhor material da mentoria.' },
+  ],
+  roteiro: [
+    { titulo: 'Diagnóstico', texto: 'Entender a sua empresa antes de qualquer dica.' },
+    { titulo: 'Visibilidade', texto: 'Como o Instagram entrega vídeo para quem ainda não te segue.' },
+    { titulo: 'Identidade', texto: 'O que falar e como falar do seu produto.' },
+    { titulo: 'Estratégia Social', texto: 'Roteiro, gravação no celular e o caminho até a venda.' },
+    { titulo: 'Plano + dúvidas', texto: 'Seus próximos 30 dias e tudo o que ficou em aberto.' },
+  ],
+  dores: [
+    { dor: 'Não sei o que postar', solucao: 'Pilares de conteúdo e fábrica de pautas' },
+    { dor: 'Tenho vergonha de aparecer', solucao: 'Formatos sem rosto e gravação guiada' },
+    { dor: 'Posto, mas ninguém vê', solucao: 'Gancho, retenção e perfil que converte' },
+    { dor: 'Tenho views, mas não vendo', solucao: 'Oferta clara, chamada e caminho até o WhatsApp' },
+    { dor: 'Não tenho tempo', solucao: 'Rotina semanal e gravação em lote' },
+  ],
+  plano: [
+    { semana: 'Semana 1', titulo: 'Arrumar a casa', texto: 'Perfil revisado (bio, link, destaques) e banco com 20 pautas tiradas das perguntas dos clientes.' },
+    { semana: 'Semana 2', titulo: 'Gravar em lote', texto: '6 vídeos de uma vez: 3 para atrair, 2 para conectar, 1 para vender. Publicar 3 por semana.' },
+    { semana: 'Semana 3', titulo: 'Repetir o que funcionou', texto: 'Olhar as métricas, fazer a parte 2 dos melhores e stories de venda todos os dias.' },
+    { semana: 'Semana 4', titulo: 'Campanha de venda', texto: 'Oferta do produto-herói, depoimentos e revisão dos resultados com o mentor.' },
+  ],
 }
 
 export const nome = {
