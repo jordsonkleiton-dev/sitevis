@@ -1,11 +1,11 @@
 import { useEffect, useId, useRef, useState } from 'react'
 
 // Partes do símbolo VIS (mesmas coordenadas da logo)
-const RAIO = [
+export const RAIO = [
   '560,340 591,390 549,484 564,508 605,415 631,456 604,517 597,506 564,581 499,476',
   '633,460 672,524 569,755 536,701 611,530 605,519',
 ]
-const VI = { laranja: '475,482 486,499 455,571 433,577', escuro: '487,502 552,607 521,677 456,572' }
+export const VI = { laranja: '475,482 486,499 455,571 433,577', escuro: '487,502 552,607 521,677 456,572' }
 
 // Liga a classe "visivel" quando o elemento aparece na tela
 export function useVisivel(limite = 0.35) {
@@ -59,7 +59,7 @@ export default function Diamante({ mostrar = 'tudo', montar = false, ativo = tru
 }
 
 // Letras V e I da logo oficial (mesmo desenho do arquivo do Illustrator)
-const LETRAS = {
+export const LETRAS = {
   V: { viewBox: '1225 372 290 294', partes: [{ cor: '#fff', d: 'M1233.48 450.87L1305.40 450.87L1319.81 569.91L1450.07 378.94L1481.04 378.94L1505.95 407.58L1333.81 657.83L1264.85 657.83Z' }] },
   I: {
     viewBox: '1440 372 242 186',

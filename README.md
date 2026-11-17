@@ -42,3 +42,18 @@ Para adicionar mais criativos, inclua novos itens na lista `portfolio` em `src/c
   `src/assets/fonts/`. ⚠️ Não tem acentos — use só em palavras sem acento. Uso comercial
   exige licença da Chequered Ink (chequered.ink).
 - **Montserrat Black** (Google Fonts): títulos grossos, como "CRIATIVIDADE".
+
+## Apresentação da mentoria "Vídeos que vendem"
+
+Slides animados em 3D, na identidade VIS, em `mentoria/`.
+
+```bash
+npm install
+npm run mentoria          # abre em http://localhost:5174
+npm run mentoria:build    # gera a versão para publicar em dist-mentoria/
+```
+
+- **Navegar:** → / espaço / clique avança (um item por vez), ← volta, arraste no celular.
+- **O** visão geral · **N** notas do mentor · **F** tela cheia · **?** ajuda.
+- **Textos:** todos em `mentoria/src/slides.jsx` (cada slide tem título, seção e notas).
+- O slide de prática tem campos para preencher com o mentorado (ficam salvos no navegador).
