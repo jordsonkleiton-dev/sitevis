@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { empresa, nome, metodo, servicos, etapas, simbolo, portfolio } from './conteudo.js'
+import { empresa, nome, metodo, servicos, etapas, simbolo, portfolio, mentoria } from './conteudo.js'
 import Icone from './Icone.jsx'
 import Diamante, { Letra, useVisivel } from './Diamante.jsx'
 import { Relampagos, Assinatura, GradeFundo } from './Efeitos.jsx'
@@ -12,6 +12,7 @@ const menu = [
   ['#simbolo', 'O símbolo'],
   ['#metodo', 'Método VIS'],
   ['#servicos', 'Serviços'],
+  ['#mentoria', 'Mentoria'],
   ['#portfolio', 'Criativos'],
   ['#contato', 'Contato'],
 ]
@@ -313,6 +314,132 @@ function ComoFunciona() {
   )
 }
 
+// Cadastros da mentoria chegam no e-mail via FormSubmit (o 1º envio pede para ativar pelo e-mail)
+const ENVIO_MENTORIA = `https://formsubmit.co/ajax/${empresa.email}`
+
+function Mentoria() {
+  return (
+    <section id="mentoria" className="secao fundo-magenta listras mentoria">
+      <Relampagos className="relampagos--suave" />
+      <div className="container">
+        <div className="mentoria__topo">
+          <div>
+            <p className="etiqueta">Mentoria VIS creative</p>
+            <h2 className="mentoria__titulo">
+              <span className="titulo-pesado titulo-pesado--branco">Vídeos que</span>
+              <span className="titulo-poder">VENDEM</span>
+            </h2>
+            <p className="mentoria__chamada">{mentoria.chamada}</p>
+            <a className="botao botao--laranja" href="#cadastro-mentoria">Quero participar</a>
+            <p className="mentoria__formato">{mentoria.formato}</p>
+          </div>
+          <div className="cartao cartao--vidro mentoria__para-quem">
+            <h3>É para você se…</h3>
+            <ul>{mentoria.paraQuem.map((t) => <li key={t}>{t}</li>)}</ul>
+          </div>
+        </div>
+
+        <ol className="etapas mentoria__etapas">
+          {mentoria.etapas.map((e, i) => (
+            <li key={e.titulo} className="etapa">
+              <span className="etapa__num">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{e.titulo}</h3>
+              <p>{e.texto}</p>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mentoria__baixo">
+          <div className="cartao cartao--vidro mentoria__entregas">
+            <h3>Você sai com</h3>
+            <ul>{mentoria.entregas.map((t) => <li key={t}>{t}</li>)}</ul>
+          </div>
+          <CadastroMentoria />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CadastroMentoria() {
+  const [estado, setEstado] = useState('aberto') // aberto | enviando | enviado | erro
+  const [dados, setDados] = useState(null)
+
+  const mensagemWhats = (d) =>
+    `Olá! Quero saber mais sobre a Mentoria Vídeos que Vendem.\nNome: ${d.nome}\nEmpresa: ${d.empresa}\nInstagram: ${d.instagram}\nMaior dificuldade: ${d.dificuldade}${d.mensagem ? `\n${d.mensagem}` : ''}`
+
+  async function enviar(e) {
+    e.preventDefault()
+    const d = Object.fromEntries(new FormData(e.target))
+    setDados(d)
+    setEstado('enviando')
+    try {
+      const r = await fetch(ENVIO_MENTORIA, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `Cadastro na mentoria: ${d.nome}`,
+          _template: 'table',
+          Nome: d.nome, WhatsApp: d.whatsapp, 'E-mail': d.email, Empresa: d.empresa,
+          Instagram: d.instagram, Segmento: d.segmento, 'Maior dificuldade': d.dificuldade, Mensagem: d.mensagem,
+          _honey: d._honey,
+        }),
+      })
+      setEstado(r.ok ? 'enviado' : 'erro')
+    } catch {
+      setEstado('erro')
+    }
+  }
+
+  if (estado === 'enviado' || estado === 'erro') {
+    return (
+      <div id="cadastro-mentoria" className="cartao cartao--vidro mentoria__form mentoria__obrigado" role="status">
+        {estado === 'enviado' ? (
+          <>
+            <h3>Cadastro recebido! ✨</h3>
+            <p>Obrigado, {dados?.nome?.split(' ')[0]}. Vamos entrar em contato pelo WhatsApp com todos os detalhes da mentoria.</p>
+            <p>Se preferir adiantar a conversa, chame a gente agora:</p>
+          </>
+        ) : (
+          <>
+            <h3>Não conseguimos enviar agora</h3>
+            <p>Seus dados não se perderam: envie pelo WhatsApp e respondemos por lá.</p>
+          </>
+        )}
+        <a className="botao" href={linkWhats(mensagemWhats(dados))} target="_blank" rel="noreferrer">Falar no WhatsApp</a>
+      </div>
+    )
+  }
+
+  return (
+    <form id="cadastro-mentoria" className="cartao cartao--vidro formulario mentoria__form" onSubmit={enviar}>
+      <h3>Solicite a sua vaga</h3>
+      <p className="aviso">Preencha os dados e entraremos em contato com os detalhes, sem compromisso.</p>
+      <label>Seu nome<input name="nome" required autoComplete="name" /></label>
+      <div className="formulario__dupla">
+        <label>WhatsApp<input name="whatsapp" required type="tel" inputMode="tel" autoComplete="tel" placeholder="(00) 00000-0000" /></label>
+        <label>E-mail<input name="email" required type="email" autoComplete="email" /></label>
+      </div>
+      <div className="formulario__dupla">
+        <label>Empresa<input name="empresa" required autoComplete="organization" /></label>
+        <label>Instagram da empresa<input name="instagram" placeholder="@suaempresa" /></label>
+      </div>
+      <label>O que você vende?<input name="segmento" required placeholder="Ex.: roupas femininas, doces, estética" /></label>
+      <label>Sua maior dificuldade hoje
+        <select name="dificuldade" defaultValue={mentoria.dificuldades[0]}>
+          {mentoria.dificuldades.map((t) => <option key={t}>{t}</option>)}
+        </select>
+      </label>
+      <label>Quer contar algo mais? (opcional)<textarea name="mensagem" rows="3" /></label>
+      <input type="text" name="_honey" className="escondido" tabIndex="-1" autoComplete="off" aria-hidden="true" />
+      <button className="botao botao--laranja" type="submit" disabled={estado === 'enviando'}>
+        {estado === 'enviando' ? 'Enviando…' : 'Quero participar da mentoria'}
+      </button>
+      <p className="aviso">Usamos seus dados só para falar com você sobre a mentoria.</p>
+    </form>
+  )
+}
+
 function Contato() {
   const [enviado, setEnviado] = useState(false)
   function enviar(e) {
@@ -373,6 +500,7 @@ export default function App() {
         <Servicos />
         <Portfolio itens={criativos} />
         <ComoFunciona />
+        <Mentoria />
         <Contato />
       </main>
       <footer className="rodape">

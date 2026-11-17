@@ -285,3 +285,30 @@ a { color: inherit; }
   .diamante--montar .diamante__raio, .diamante--montar .diamante__vi { opacity: 1; transform: none; animation: none !important; }
   .equacao__parte { opacity: 1; transform: none; transition: none; }
 }
+
+/* Mentoria */
+.mentoria__topo { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+.mentoria__titulo { display: grid; justify-items: start; margin-bottom: 22px; }
+.mentoria__titulo .titulo-pesado { font-size: clamp(2rem, 5vw, 3.6rem); line-height: .95; }
+.mentoria__titulo .titulo-poder { font-size: clamp(3.6rem, 10vw, 7.5rem); line-height: .85; }
+.mentoria__chamada { font-size: 1.15rem; color: var(--texto-suave); max-width: 560px; margin-bottom: 28px; }
+.mentoria__formato { margin-top: 16px; color: var(--texto-suave); font-size: .95rem; }
+.mentoria__para-quem h3, .mentoria__entregas h3, .mentoria__form h3 { font-size: 1.3rem; margin-bottom: 14px; }
+.mentoria__para-quem ul, .mentoria__entregas ul { list-style: none; display: grid; gap: 12px; }
+.mentoria__para-quem li, .mentoria__entregas li { padding-left: 22px; position: relative; color: var(--texto-suave); }
+.mentoria__para-quem li::before, .mentoria__entregas li::before { content: ''; position: absolute; left: 0; top: .2em; width: 9px; height: 1.1em; background: linear-gradient(var(--laranja-claro), var(--magenta)); -webkit-mask: var(--raio) center / contain no-repeat; mask: var(--raio) center / contain no-repeat; }
+.mentoria__etapas { margin: 64px 0; }
+.mentoria__baixo { display: grid; grid-template-columns: 1fr 1.3fr; gap: 32px; align-items: start; }
+.mentoria__form { scroll-margin-top: 90px; }
+.mentoria__obrigado { display: grid; gap: 14px; justify-items: start; }
+.mentoria__obrigado p { color: var(--texto-suave); }
+.formulario__dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.formulario button:disabled { opacity: .6; cursor: wait; }
+.escondido { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+@media (max-width: 860px) {
+  .mentoria__topo, .mentoria__baixo, .formulario__dupla { grid-template-columns: 1fr; }
+}
+.mentoria .mentoria__titulo::after { display: none; }
+@media (min-width: 1000px) { .mentoria__etapas { grid-template-columns: repeat(5, 1fr); } }
+.mentoria__topo > *, .mentoria__baixo > * { min-width: 0; }
+.formulario input, .formulario textarea, .formulario select { width: 100%; min-width: 0; }
