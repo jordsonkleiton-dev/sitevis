@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { empresa, nome, metodo, servicos, etapas, simbolo, portfolio } from './conteudo.js'
+import { empresa, nome, metodo, servicos, etapas, simbolo, portfolio, mentoria } from './conteudo.js'
 import Icone from './Icone.jsx'
 import Diamante, { Letra, useVisivel } from './Diamante.jsx'
 import { Relampagos, Assinatura, GradeFundo } from './Efeitos.jsx'
@@ -318,7 +318,9 @@ function Contato() {
   function enviar(e) {
     e.preventDefault()
     const d = new FormData(e.target)
-    const msg = `Olá! Meu nome é ${d.get('nome')}${d.get('empresa') ? `, da ${d.get('empresa')}` : ''}.\nTenho interesse em: ${d.get('servico')}.\n${d.get('mensagem')}`
+    const escolha = d.get('servico')
+    const pedido = escolha === mentoria.nome ? mentoria.mensagem : `Tenho interesse em: ${escolha}.`
+    const msg = `Olá! Meu nome é ${d.get('nome')}${d.get('empresa') ? `, da ${d.get('empresa')}` : ''}.\n${pedido}${d.get('mensagem') ? `\n${d.get('mensagem')}` : ''}`
     window.open(linkWhats(msg), '_blank')
     setEnviado(true)
   }
@@ -345,13 +347,18 @@ function Contato() {
         <form className="cartao cartao--vidro formulario" onSubmit={enviar}>
           <label>Seu nome<input name="nome" required autoComplete="name" /></label>
           <label>Empresa<input name="empresa" autoComplete="organization" /></label>
-          <label>Serviço de interesse
+          <label>O que você procura?
             <select name="servico" defaultValue="Ainda não sei">
               <option>Ainda não sei</option>
-              {servicos.map((s) => <option key={s.titulo}>{s.titulo}</option>)}
+              <optgroup label="Comprar">
+                <option>{mentoria.nome}</option>
+              </optgroup>
+              <optgroup label="Serviços">
+                {servicos.map((s) => <option key={s.titulo}>{s.titulo}</option>)}
+              </optgroup>
             </select>
           </label>
-          <label>Mensagem<textarea name="mensagem" rows="4" required /></label>
+          <label><span>Mensagem <small className="opcional">(opcional)</small></span><textarea name="mensagem" rows="4" /></label>
           <button className="botao botao--laranja" type="submit">Enviar pelo WhatsApp</button>
           {enviado && <p className="aviso">Abrimos o WhatsApp para você concluir o envio.</p>}
         </form>

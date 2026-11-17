@@ -8,16 +8,21 @@ const RAIO = [
 const VI = { laranja: '475,482 486,499 455,571 433,577', escuro: '487,502 552,607 521,677 456,572' }
 
 // Liga a classe "visivel" quando o elemento aparece na tela
-export function useVisivel(limite = 0.35) {
+// Dispara quando o topo do elemento passa de 20% da altura da tela,
+// não importa o tamanho do elemento (seções altas no celular também funcionam)
+export function useVisivel() {
   const ref = useRef(null)
   const [visivel, setVisivel] = useState(false)
   useEffect(() => {
     const el = ref.current
     if (!el || !('IntersectionObserver' in window)) return setVisivel(true)
-    const obs = new IntersectionObserver(([e]) => e.isIntersecting && (setVisivel(true), obs.disconnect()), { threshold: limite })
+    const obs = new IntersectionObserver(
+      ([e]) => e.isIntersecting && (setVisivel(true), obs.disconnect()),
+      { threshold: 0, rootMargin: '0px 0px -20% 0px' },
+    )
     obs.observe(el)
     return () => obs.disconnect()
-  }, [limite])
+  }, [])
   return [ref, visivel]
 }
 

@@ -14,6 +14,12 @@ export const empresa = {
   cidade: 'Atendimento presencial e online',
 }
 
+// Mentoria: aparece como opção de compra no formulário de contato
+export const mentoria = {
+  nome: 'Mentoria VIS',
+  mensagem: 'Quero comprar a Mentoria VIS. Pode me passar os detalhes?',
+}
+
 export const nome = {
   titulo: 'Por que VIS?',
   texto:

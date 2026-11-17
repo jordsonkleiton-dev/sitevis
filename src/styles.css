@@ -243,7 +243,8 @@ a { color: inherit; }
 .formulario { display: grid; gap: 16px; }
 .formulario label { display: grid; gap: 6px; font-weight: 400; }
 .formulario input, .formulario textarea, .formulario select { font: inherit; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, .2); background: rgba(0, 0, 0, .3); color: #fff; }
-.formulario option { background: #2a002f; }
+.formulario option, .formulario optgroup { background: #2a002f; }
+.opcional { font-weight: 300; color: var(--texto-suave); font-size: .85em; }
 .formulario input:focus, .formulario textarea:focus, .formulario select:focus { outline: 2px solid var(--laranja-claro); border-color: transparent; }
 .aviso { color: var(--texto-suave); font-size: .95rem; }
 
