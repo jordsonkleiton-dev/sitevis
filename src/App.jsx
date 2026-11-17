@@ -292,7 +292,7 @@ function Portfolio({ itens }) {
   )
 }
 
-function Mentoria({ escolher }) {
+function Mentoria() {
   return (
     <section id="mentoria" className="secao fundo-magenta listras mentoria">
       <Relampagos className="relampagos--suave" />
@@ -343,8 +343,8 @@ function Mentoria({ escolher }) {
         </ol>
 
         <div className="mentoria__cta">
-          <a className="botao botao--laranja" href="#contato" onClick={() => escolher(mentoria.nome)}>Quero a mentoria</a>
-          <a className="botao botao--contorno" href={linkWhats(`Olá! ${mentoria.mensagem}`)} target="_blank" rel="noreferrer">Tirar dúvidas no WhatsApp</a>
+          <a className="botao botao--laranja" href={linkWhats(`Olá! ${mentoria.mensagem}`)} target="_blank" rel="noreferrer">Quero a mentoria</a>
+          <p className="mentoria__nota">A contratação é feita pelo WhatsApp: você fala direto com a gente e tira todas as dúvidas antes.</p>
         </div>
       </div>
     </section>
@@ -439,7 +439,7 @@ export default function App() {
         <Simbolo />
         <Metodo />
         <Servicos />
-        <Mentoria escolher={setEscolha} />
+        <Mentoria />
         <Portfolio itens={criativos} />
         <ComoFunciona />
         <Contato escolha={escolha} setEscolha={setEscolha} />
